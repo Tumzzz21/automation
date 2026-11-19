@@ -1,0 +1,59 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "0xtnp Flow Studio",
+  "version": "1.13.52",
+  "description": "Queue Google Flow, ChatGPT, Gemini and Grok prompts, attach images, save results, and repair flagged prompts with cloud repair.",
+  "permissions": [
+    "storage",
+    "alarms",
+    "unlimitedStorage",
+    "tabs",
+    "scripting",
+    "sidePanel",
+    "notifications",
+    "debugger",
+    "downloads",
+    "downloads.ui",
+    "nativeMessaging",
+    "identity",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "https://labs.google/*",
+    "https://flow.google/*",
+    "https://*.google/*",
+    "https://flow-content.google/*",
+    "https://*.googleusercontent.com/*",
+    "https://*.google.com/*",
+    "https://*.googleapis.com/*",
+    "http://127.0.0.1/*",
+    "https://chatgpt.com/*",
+    "https://*.oaiusercontent.com/*",
+    "https://repair.corethea.com/*"
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_title": "Open 0xtnp Flow Studio",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png"
+    }
+  },
+  "side_panel": {
+    "default_path": "control.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://localhost/*"
+  ]
+}

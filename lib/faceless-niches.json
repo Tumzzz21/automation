@@ -1,0 +1,307 @@
+[
+  {
+    "id": 1,
+    "name": "Filipino food / hands-only cooking",
+    "file": "niches/filipino-food-hands-only-cooking.md"
+  },
+  {
+    "id": 2,
+    "name": "Cooking / food",
+    "file": "niches/cooking-food.md"
+  },
+  {
+    "id": 3,
+    "name": "Real estate construction / contractor social content",
+    "file": "niches/real-estate-construction-contractor.md"
+  },
+  {
+    "id": 4,
+    "name": "Real estate listing / property tour",
+    "file": "niches/real-estate-listing-property-tour.md"
+  },
+  {
+    "id": 5,
+    "name": "Hygiene / health habits",
+    "file": "niches/hygiene-health-habits.md"
+  },
+  {
+    "id": 6,
+    "name": "Gardening",
+    "file": "niches/gardening.md"
+  },
+  {
+    "id": 7,
+    "name": "Finance / money habits",
+    "file": "niches/finance-money-habits.md"
+  },
+  {
+    "id": 8,
+    "name": "Body science / anatomy",
+    "file": "niches/body-science-anatomy.md"
+  },
+  {
+    "id": 9,
+    "name": "Psychology / self-improvement",
+    "file": "niches/psychology-self-improvement.md"
+  },
+  {
+    "id": 10,
+    "name": "Tech / AI tools",
+    "file": "niches/tech-ai-tools.md"
+  },
+  {
+    "id": 11,
+    "name": "Product / commercial",
+    "file": "niches/product-commercial.md"
+  },
+  {
+    "id": 12,
+    "name": "DIY craft / satisfying process",
+    "file": "niches/diy-craft-satisfying-process.md"
+  },
+  {
+    "id": 13,
+    "name": "Story / mini-movie",
+    "file": "niches/story-mini-movie.md"
+  },
+  {
+    "id": 14,
+    "name": "Cozy anime storybook art style",
+    "file": "niches/cozy-anime-storybook.md"
+  },
+  {
+    "id": 15,
+    "name": "3D animation explainer style",
+    "file": "niches/3d-animation-explainer.md"
+  },
+  {
+    "id": 16,
+    "name": "Cinematic skeleton character host/style",
+    "file": "niches/cinematic-skeleton-host.md"
+  },
+  {
+    "id": 17,
+    "name": "Cute chibi cinematic character host/style",
+    "file": "niches/cute-chibi-host.md"
+  },
+  {
+    "id": 18,
+    "name": "Artistic toy/doll muse character host/style",
+    "file": "niches/artistic-toy-doll-muse-host.md"
+  },
+  {
+    "id": 19,
+    "name": "Attractive cinematic avatar host/style",
+    "file": "niches/attractive-cinematic-avatar-host.md"
+  },
+  {
+    "id": 20,
+    "name": "8K realistic glamorous fashion avatar host/style",
+    "file": "niches/8k-realistic-glamorous-fashion-avatar-host.md"
+  },
+  {
+    "id": 21,
+    "name": "Wildlife / nature animal facts",
+    "file": "niches/wildlife-nature-animal-facts.md"
+  },
+  {
+    "id": 22,
+    "name": "Anime slow-living / countryside cooking story",
+    "file": "niches/anime-slow-living-countryside-cooking.md"
+  },
+  {
+    "id": 23,
+    "name": "AI for normal jobs",
+    "file": "niches/ai-for-normal-jobs.md"
+  },
+  {
+    "id": 24,
+    "name": "Senior tech / scam protection / digital safety",
+    "file": "niches/senior-tech-scam-protection.md"
+  },
+  {
+    "id": 25,
+    "name": "Home disaster prep / insurance reality",
+    "file": "niches/home-disaster-prep-insurance-reality.md"
+  },
+  {
+    "id": 26,
+    "name": "Body mechanics for everyday pain",
+    "file": "niches/body-mechanics-everyday-pain.md"
+  },
+  {
+    "id": 27,
+    "name": "Other custom niche",
+    "file": "niches/other-custom-niche.md"
+  },
+  {
+    "id": 28,
+    "name": "Nursery rhymes / kids songs",
+    "file": "niches/nursery-rhymes-kids-songs.md"
+  },
+  {
+    "id": 29,
+    "name": "AI talking objects / sarcastic object host",
+    "file": "niches/ai-talking-objects-sarcastic-host.md"
+  },
+  {
+    "id": 30,
+    "name": "Faith / Bible cinematic anthology host/style",
+    "file": "niches/faith-bible-cinematic-anthology-host.md"
+  },
+  {
+    "id": 31,
+    "name": "Motivational quotes / sayings with consistent character host",
+    "file": "niches/motivational-quotes-consistent-character-host.md"
+  },
+  {
+    "id": 32,
+    "name": "Science Proves God / faith-science evidence explainer",
+    "file": "niches/faith-science-testimony-intelligent-design-explainer.md"
+  },
+  {
+    "id": 33,
+    "name": "Paper-cut editorial commentary / investigative explainer",
+    "file": "niches/paper-cut-editorial-commentary-investigative-explainer.md"
+  },
+  {
+    "id": 34,
+    "name": "Tagalog drama (teleserye, v23 rules)",
+    "file": "niches/tagalog-drama.md"
+  },
+  {
+    "id": 35,
+    "name": "Paldo Si Boss",
+    "file": "niches/paldo-si-boss.md"
+  },
+  {
+    "id": 36,
+    "name": "Fruit Micro-Drama",
+    "file": "niches/fruit-micro-drama.md"
+  },
+  {
+    "id": 37,
+    "name": "Pet Soap Opera",
+    "file": "niches/pet-soap-opera.md"
+  },
+  {
+    "id": 38,
+    "name": "Pinoy Folklore Horror",
+    "file": "niches/pinoy-folklore-horror.md"
+  },
+  {
+    "id": 39,
+    "name": "Claymation Pinoy Comedy",
+    "file": "niches/claymation-pinoy-comedy.md"
+  },
+  {
+    "id": 40,
+    "name": "Kwentong May Aral",
+    "file": "niches/kwentong-may-aral.md"
+  },
+  {
+    "id": 41,
+    "name": "Tiny Workers — Miniature World",
+    "file": "niches/tiny-workers-miniature-world.md"
+  },
+  {
+    "id": 42,
+    "name": "Impossible ASMR",
+    "file": "niches/impossible-asmr.md"
+  },
+  {
+    "id": 43,
+    "name": "Time Travel POV",
+    "file": "niches/time-travel-pov.md"
+  },
+  {
+    "id": 44,
+    "name": "Creature Vlog Comedy",
+    "file": "niches/creature-vlog-comedy.md"
+  },
+  {
+    "id": 45,
+    "name": "Kapre Vlogs",
+    "file": "niches/kapre-vlogs.md"
+  },
+  {
+    "id": 46,
+    "name": "POV History",
+    "file": "niches/pov-history.md"
+  },
+  {
+    "id": 47,
+    "name": "Pera Matters",
+    "file": "niches/pera-matters.md"
+  },
+  {
+    "id": 48,
+    "name": "Luxury Files",
+    "file": "niches/luxury-files.md"
+  },
+  {
+    "id": 49,
+    "name": "Unsolved PH",
+    "file": "niches/unsolved-ph.md"
+  },
+  {
+    "id": 50,
+    "name": "Halloween Specials",
+    "file": "niches/halloween-specials.md"
+  },
+  {
+    "id": 51,
+    "name": "Sari-Sari Store Confessions",
+    "file": "niches/sari-sari-confessions.md"
+  },
+  {
+    "id": 52,
+    "name": "Blotter Ngayon Gabi",
+    "file": "niches/blotter-ngayon-gabi.md"
+  },
+  {
+    "id": 53,
+    "name": "Jeepney Dashboard Diaries",
+    "file": "niches/jeepney-diaries.md"
+  },
+  {
+    "id": 54,
+    "name": "Reverse History",
+    "file": "niches/reverse-history.md"
+  },
+  {
+    "id": 55,
+    "name": "Podcast Hugot Host",
+    "file": "niches/podcast-hugot-host.md"
+  },
+  {
+    "id": 56,
+    "name": "UGC Product Ad",
+    "file": "niches/ugc-product-ad.md"
+  },
+  {
+    "id": 57,
+    "name": "Food & Body Tips",
+    "file": "niches/food-body-tips.md"
+  },
+  {
+    "id": 58,
+    "name": "AI Drama (any country and language)",
+    "file": "niches/ai-drama.md"
+  },
+  {
+    "id": 59,
+    "name": "Animated Short Films",
+    "file": "niches/animated-short-films.md"
+  },
+  {
+    "id": 60,
+    "name": "Stick Figure Explainer",
+    "file": "niches/stick-figure-explainer.md"
+  },
+  {
+    "id": 61,
+    "name": "Anime Drama (2D, any country and language)",
+    "file": "niches/anime-drama.md"
+  }
+]

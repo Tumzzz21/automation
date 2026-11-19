@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>0xtnp Flow Studio</title>
+<style>
+  :root { color-scheme:dark; --bg:#0b0e13; --card:#141922; --line:#272f3b; --muted:#94a0b2; --text:#eef2f7; --green:#29b36b; --green-dark:#168a50; --blue:#4da3ff; --amber:#f2b84b; --red:#ef6262; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:12px; background:var(--bg); color:var(--text); font:13px/1.4 Inter,Segoe UI,Arial,sans-serif; }
+  h1 { margin:0; font-size:16px; }
+  h2 { margin:0; font-size:13px; }
+  .sub,.muted { color:var(--muted); }
+  .sub { margin:3px 0 9px; font-size:11.5px; }
+  .community-support[hidden] { display:none; }
+  .community-support { display:flex;align-items:center;gap:6px;height:32px;margin:8px 0 0;padding:3px 4px 3px 9px;border:1px solid #b798ff55;border-radius:8px;background:linear-gradient(100deg,#b798ff20,#7ce5df0b);color:#e1d4f5; }
+  .community-support-copy { flex:1;min-width:0;font-size:11px;white-space:nowrap; }
+  .community-support-link { flex-shrink:0;display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:5px;background:#97e4d7;color:#182d2b;font-size:11px;line-height:18px;font-weight:650;text-decoration:none; }
+  .community-support-link:hover { background:#b3f1e6; }
+  .community-support-link:focus-visible { outline:2px solid #b798ff;outline-offset:2px; }
+  .community-support-close { flex-shrink:0;width:24px;height:24px;min-height:24px;padding:0;border:0;border-radius:5px;background:transparent;color:#c9bdd9;font-size:16px;cursor:pointer; }
+  .community-support-close:hover { background:#ffffff0d;color:white; }
+  @media(max-width:350px) { .community-support { gap:4px;padding-left:6px; } .community-support-link { padding-inline:6px; } }
+  .app-header { position:sticky; top:0; z-index:4; margin:-12px -12px 10px; padding:12px 12px 0; background:var(--bg); border-bottom:1px solid #141b24; }
+  .top-tabs { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:9px; }
+  .top-tab { min-width:0; padding:7px 8px; background:transparent; color:#cbd3df; border:none; border-bottom:2px solid transparent; border-radius:6px 6px 0 0; cursor:pointer; font:inherit; }
+  .top-tab:hover { color:#fff; background:#10151d; }
+  .top-tab[aria-selected="true"] { color:#7ee2a8; border-bottom-color:var(--green); background:#0f1a14; }
+  .card { margin-bottom:10px; padding:11px; background:var(--card); border:1px solid var(--line); border-radius:10px; }
+  .card-head,.row,.toolbar,.stats { display:flex; align-items:center; gap:7px; }
+  .card-head { justify-content:space-between; margin-bottom:9px; }
+  .row,.toolbar { flex-wrap:wrap; margin-bottom:8px; }
+  .row:last-child { margin-bottom:0; }
+  .prompt-status-row:has(#applyPromptsBtn.hidden):has(#applyStatus:empty) { display:none; }
+  button,select,input { min-height:31px; border-radius:7px; border:1px solid #364152; font:inherit; }
+  button { padding:5px 10px; color:white; background:#263243; cursor:pointer; }
+  button:hover:not(:disabled) { filter:brightness(1.15); }
+  button.primary { background:var(--green-dark); border-color:#22aa65; }
+  button.danger { background:#8f3439; border-color:#b8464d; }
+  button.warn { background:#76551f; border-color:#9b712b; }
+  button.ghost { background:transparent; }
+  button.small { min-height:25px; padding:2px 7px; font-size:11px; }
+  button:disabled { opacity:.45; cursor:not-allowed; }
+  input,select { padding:5px 8px; color:var(--text); background:#0d1219; }
+  input[type=text] { min-width:100px; }
+  input[type=number] { width:64px; }
+  label { color:#cbd3df; font-size:11.5px; }
+  .field { display:flex; flex-direction:column; gap:3px; }
+  #settingsTabPanel .field input { width:100%;min-width:0; }
+  /* Every checkbox is an on/off switch (owner 2026-10-15); same look as the "Auto change file name" switch-row. */
+  input[type="checkbox"]:not(.switch-row input) { appearance:none;-webkit-appearance:none;position:relative;display:inline-block;width:36px;height:20px;min-height:20px;flex-shrink:0;margin:0;border:0;border-radius:20px;background:#40364e;cursor:pointer;vertical-align:middle;transition:background .2s; }
+  input[type="checkbox"]:not(.switch-row input)::before { content:"";position:absolute;left:3px;top:3px;width:14px;height:14px;border-radius:50%;background:#c1b6d2;transition:transform .2s,background .2s; }
+  input[type="checkbox"]:not(.switch-row input):checked { background:#70599c; }
+  input[type="checkbox"]:not(.switch-row input):checked::before { transform:translateX(16px);background:#9ef0df; }
+  input[type="checkbox"]:not(.switch-row input):focus-visible { outline:2px solid #b798ff;outline-offset:2px; }
+  input[type="checkbox"]:not(.switch-row input):disabled { opacity:.5;cursor:not-allowed; }
+  @media(prefers-reduced-motion:reduce) { input[type="checkbox"], input[type="checkbox"]::before { transition:none!important; } }
+  /* Switches sit on the right of their label, like "Auto change file name" (owner 2026-10-16). */
+  .check-setting { display:flex;width:100%;box-sizing:border-box;align-items:center;gap:12px;line-height:1.5;cursor:pointer; }
+  label.check-setting input[type="checkbox"] { order:2;margin:0 0 0 auto; }
+  .reference-match { margin-top:10px;padding:11px 12px;border:1px solid #443852;border-radius:10px;background:#ab85f408; }
+  .reference-match label { display:flex;width:100%;box-sizing:border-box;align-items:center;gap:12px;color:var(--text);font-size:12px;cursor:pointer; }
+  /* Switch on the right, like "Auto change file name" (owner 2026-10-16). */
+  .reference-match label input[type="checkbox"] { order:2;margin-left:auto; }
+  .reference-match-help { margin:5px 48px 0 0;color:var(--muted);font-size:11px;line-height:1.5; }
+  .reference-match-help p { margin:0; }
+  .reference-match-help p + p { margin-top:5px;font-size:10px; }
+  .reference-match code { color:#d8c6ff;font:inherit; }
+  /* Storyboard sheets card (owner 2026-10-25): title + one short line, switch right, upscale picker under a divider */
+  .sheet-title { display:flex;flex-direction:column;gap:2px;min-width:0; }
+  .sheet-title strong { font-size:13px;white-space:nowrap; }
+  .pro-chip { display:inline-block;margin-left:6px;padding:1px 6px;border:1px solid #c9a24a;border-radius:999px;background:linear-gradient(135deg,#f6d36555,#c9a24a33);color:#f6d365;font-size:9px;font-weight:800;letter-spacing:.8px;vertical-align:2px;cursor:pointer; }
+  .pro-chip:hover { background:linear-gradient(135deg,#f6d36588,#c9a24a55); }
+  .sheet-title small { color:var(--muted);font-size:11px; }
+  #manualSheetsRow .sheet-upscale { margin:12px 0 0;padding-top:10px;border-top:1px solid #443852; }
+  #manualSheetsRow .sheet-upscale label { font-size:11px;color:var(--muted); }
+  .repair-panel h2 { margin-bottom:5px; }
+  .repair-panel p { margin:7px 0;font-size:11px;line-height:1.5; }
+  .repair-panel .repair-connect { margin:12px 0;padding:11px 12px;border:1px solid #443852;border-radius:10px;background:#ab85f408; }
+  .repair-panel .repair-connect .row { gap:6px;margin-bottom:6px; }
+  .repair-panel button { min-height:33px;padding:6px 10px;font-size:11px; }
+  .repair-panel .repair-switch { padding:8px 0;color:var(--text);font-size:12px;font-weight:600; }
+  .repair-panel .repair-limit { margin-top:12px; }
+  .repair-panel .repair-actions { margin-top:12px;gap:7px; }
+  .repair-panel #repairStatus:empty, .repair-panel #repairConnection:empty { display:none; }
+  .repair-panel #repairConnection:not(:empty) { padding:8px 10px;border-left:2px solid #a989f5;border-radius:4px;background:#ab85f408; }
+  .repair-panel .advanced-settings { margin-top:12px;padding-top:8px;border-top:1px solid #3a304d;font-size:11px; }
+  .advanced-settings { margin-top:14px;color:var(--muted); }
+  .advanced-settings summary { cursor:pointer;padding:6px 0; }
+  .advanced-settings .check-setting { margin-top:10px; }
+  .grow { flex:1; min-width:110px; }
+  .mode-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+  .mode-btn { padding:9px 8px; background:#101722; color:#cbd3df; border-color:#303947; text-align:center; }
+  .mode-btn[aria-pressed="true"] { background:#11301f; border-color:var(--green); color:#7ee2a8; }
+  .dropzone { display:grid; place-items:center; gap:4px; min-height:86px; padding:12px; text-align:center; color:var(--muted); background:#0d1219; border:1.5px dashed #3a4656; border-radius:9px; cursor:pointer; font-size:11.5px; }
+  .dropzone.drag { border-color:var(--green); color:#7ee2a8; background:#0f1a14; }
+  .thumbs { display:grid; grid-template-columns:repeat(auto-fill,minmax(64px,1fr)); gap:7px; margin-top:8px; }
+  .thumb { position:relative; border:1px solid #2a3441; border-radius:7px; overflow:hidden; background:#080b10; aspect-ratio:1; }
+  .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+  .thumb .rm { position:absolute; top:2px; right:2px; min-height:0; padding:1px 5px; font-size:10px; border-radius:5px; background:rgba(10,12,16,.85); border:1px solid #4a2830; color:#ff9d9d; cursor:pointer; }
+  .thumb .nm { position:absolute; left:0; right:0; bottom:0; padding:2px 4px; font-size:9px; color:#cfd7e4; background:rgba(8,11,16,.85); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .thumb.is-orderable { cursor:grab; }
+  .thumb.order-target { outline:2px solid #a989f5;outline-offset:-2px; }
+  .thumb .order-position { position:absolute;left:2px;top:2px;min-width:12px;padding:0 3px;border-radius:3px;background:#151321cc;font-size:8px;line-height:12px;text-align:center;color:white; }
+  .thumb .order-controls { position:absolute;bottom:16px;left:2px;right:2px;display:flex;justify-content:space-between;pointer-events:none; }
+  /* Small arrows that stay faint until the image is hovered or focused. */
+  .thumb .order-move { pointer-events:auto;width:14px;height:14px;min-height:0;padding:0;border-radius:3px;border-width:1px;background:#151321cc;font-size:8px;line-height:12px;text-align:center;opacity:.55;transition:opacity .15s; }
+  .thumb:hover .order-move, .thumb .order-move:focus-visible { opacity:1; }
+  .thumb .order-move:disabled { opacity:.25; }
+  textarea { width:100%; min-height:120px; padding:8px; color:var(--text); background:#0d1219; border:1px solid #364152; border-radius:7px; font:11.5px/1.45 Consolas,monospace; resize:vertical; }
+  .progress { height:9px; overflow:hidden; background:#080b10; border:1px solid #28303b; border-radius:8px; }
+  #progressBar { width:0; height:100%; background:linear-gradient(90deg,#1b9e59,#52d28b); transition:width .25s; }
+  .stats { justify-content:space-between; margin-top:6px; color:var(--muted); font-size:11px; }
+  #queueWrap { max-height:340px; overflow:auto; border:1px solid #252d37; border-radius:8px; }
+  table { width:100%; border-collapse:collapse; table-layout:fixed; font-size:11px; }
+  th { position:sticky; top:0; z-index:1; background:#171d26; color:#9ba7b7; }
+  th,td { padding:6px; text-align:left; vertical-align:top; border-bottom:1px solid #252d37; word-break:break-word; }
+  th:nth-child(1){width:8%} th:nth-child(2){width:14%} th:nth-child(3){width:56%} th:nth-child(4){width:22%}
+  .badge { display:inline-block; padding:2px 6px; border-radius:10px; font-size:9.5px; }
+  .b-pending { background:#303846; } .b-running { background:#174d75;color:#a9dcff; }
+  .b-done { background:#145237;color:#9af0ba; } .b-error { background:#64292c;color:#ffb1b1; }
+  .b-skipped { background:#423953;color:#d3c2ef; }
+  .status-ok { color:#6ad799; } .status-bad { color:#ff8585; } .status-warn { color:#f2c15d; }
+  /* minmax(0,1fr): a long option ("Flow default (keep current model)") must not widen a column past the card (owner 2026-10-16). */
+  .settings-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .settings-grid .field, .settings-grid select, .settings-grid input { min-width:0; max-width:100%; }
+  .settings-grid select { width:100%; text-overflow:ellipsis; }
+  .settings-grid .muted, .settings-grid span { overflow-wrap:anywhere; }
+  /* Control → output options: two cards + an on/off switch row */
+  .beta-tag { font-size:9px;font-weight:800;letter-spacing:.5px;padding:1px 5px;border-radius:999px;background:#a77bff33;color:#cdb6ff;vertical-align:middle; }
+  .output-cards { display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px; }
+  .output-card { padding:12px;border:1px solid #b798ff1f;border-radius:12px;background:#ffffff05; }
+  .output-card label { display:flex;align-items:center;gap:7px;font-weight:700; }
+  .output-card label svg { width:17px;height:17px;flex-shrink:0;color:#d9cdf0; }
+  .switch-row { display:flex;align-items:center;gap:12px;margin-top:8px;padding:11px 12px;border:1px solid #b798ff1f;border-radius:12px;background:#ffffff05;cursor:pointer; }
+  .switch-row .switch-copy { display:flex;flex-direction:column;gap:2px;flex:1;min-width:0; }
+  .switch-row small { color:var(--muted,#9b91ad);font-size:11px;line-height:1.4; }
+  .switch-row input { position:absolute;opacity:0;width:1px;height:1px;pointer-events:none; }
+  .switch-track { position:relative;flex-shrink:0;width:42px;height:24px;border-radius:20px;background:#40364e;transition:background .2s; }
+  .switch-track::before { content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#c1b6d2;transition:transform .2s,background .2s; }
+  .switch-row input:checked + .switch-track { background:#70599c; }
+  .switch-row input:checked + .switch-track::before { transform:translateX(18px);background:#9ef0df; }
+  .switch-row input:focus-visible + .switch-track { outline:2px solid #b798ff;outline-offset:2px; }
+  .switch-row input:disabled + .switch-track { opacity:.5; }
+  @media(prefers-reduced-motion:reduce) { .switch-track, .switch-track::before { transition:none; } }
+  .settings-section { margin-top:12px; padding-top:10px; border-top:1px solid #252d37; }
+  .settings-section:first-of-type { margin-top:0; padding-top:0; border-top:0; }
+  .settings-section h3 { margin:0 0 8px; color:#d9e2ee; font-size:12px; }
+  #log { height:240px; overflow:auto; padding:8px; white-space:pre-wrap; word-break:break-word; background:#07090d; border:1px solid #222a34; border-radius:7px; color:#d8e1ed; font:10.5px/1.4 Consolas,monospace; }
+  footer { display:flex; justify-content:space-between; color:#6f7c8d; font-size:10px; padding:2px 3px 8px; }
+  .hidden { display:none !important; }
+  .prompt-config { display:grid; grid-template-columns:110px 1fr; gap:10px; padding:12px; margin-bottom:9px; border:1px solid var(--line); border-radius:9px; background:#10141b; }
+  .prompt-config select { width:100%; }
+  .prompt-config .thumbs { grid-column:1/-1; display:flex; flex-wrap:wrap; }
+  .prompt-config .thumb { width:58px; height:70px; }
+  .queue-item { padding:12px; margin:8px; border:1px solid #394454; border-radius:8px; display:grid; grid-template-columns:1fr auto; gap:8px; }
+  .queue-item.is-running { background:#111d35; border-color:#4a76ba; }
+  .queue-item .queue-prompt { grid-column:1/-1; }
+  .queue-output-name { color:var(--muted);font-size:9px;line-height:1.35;overflow-wrap:anywhere; }
+  .queue-item .queue-actions { grid-column:1/-1; display:flex; gap:8px; }
+  .item-progress { display:flex; align-items:center; gap:8px; margin-top:9px; }
+  .flow-progress-track { position:relative;flex:1;height:12px;overflow:hidden;border-radius:99px;background:#070e1b;border:1px solid #34415c;box-shadow:inset 0 2px 5px #0006; }
+  .flow-progress-fill { position:relative;height:100%;border-radius:inherit;background:linear-gradient(90deg,#7966eb,#b89aff,#58d8c4);box-shadow:0 0 12px #a798ff88;transition:width 1.4s cubic-bezier(.22,.61,.36,1); }
+  .flow-progress-fill::after { content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,#ffffff66 50%,transparent 80%);transform:translateX(-100%);animation:progress-shimmer 2s ease-in-out infinite; }
+  .flow-progress-track.is-waiting .flow-progress-fill { width:35%;animation:progress-travel 1.8s ease-in-out infinite; }
+  .flow-progress-track.is-complete .flow-progress-fill { background:linear-gradient(90deg,#7966eb,#c4a4ff); }
+  .flow-progress-track.is-complete .flow-progress-fill::after { animation:none;background:none; }
+  .flow-progress-label { min-width:48px;text-align:right;font-size:12px;font-weight:700;color:#d8ceff;font-variant-numeric:tabular-nums; }
+  @keyframes progress-shimmer { to { transform:translateX(100%); } }
+  @keyframes progress-travel { 0%,100% { transform:translateX(-110%); } 50% { transform:translateX(285%); } }
+  @media (prefers-reduced-motion:reduce) { .flow-progress-fill,.flow-progress-fill::after,.flow-progress-track.is-waiting .flow-progress-fill { animation:none;transition:none; } }
+  .queue-summary { padding:12px; cursor:pointer; }
+  @media (max-width:420px) { .settings-grid { grid-template-columns:minmax(0,1fr); } }
+  :root { --bg:#090d18; --card:#111827; --line:#263249; --green:#58d8b0; --green-dark:#197a69; --blue:#a798ff; --muted:#93a4bf; }
+  body { background:radial-gradient(ellipse at top right,#252047 0,transparent 460px),var(--bg); line-height:1.55; }
+  .app-header { padding:18px 14px 12px; background:rgba(9,13,24,.96); border-bottom:1px solid #30344e; backdrop-filter:blur(18px); }
+  .brand-row { display:flex;align-items:center;gap:10px; }
+  .brand-copy { flex:1;min-width:0; }
+  #backgroundModeStatus { margin-top:6px;font-size:11px;color:#beb5d0; }
+  /* Background Mode lives in the Run card as its own highlighted action. */
+  /* neon version badge next to the title */
+  /* version next to the title, in the same chip style as the repair indicator */
+  .version-badge { display:inline-block;margin-left:7px;padding:2px 7px;vertical-align:middle;position:relative;top:-2px;white-space:nowrap;
+    font-size:10px;font-weight:600;letter-spacing:.3px;line-height:1.4;color:#c3b0f7;
+    border:1px solid #8b71b24d;border-radius:6px;background:linear-gradient(110deg,#2a2140,#14111f);box-shadow:inset 0 1px 0 #ffffff08; }
+  .version-badge:empty { display:none; }
+  .preflight { margin-top:10px;padding:9px 11px;border:1px solid #b9893a;border-radius:9px;background:#3a2c1418;font-size:11.5px;line-height:1.45; }
+  .preflight.preflight-error { border-color:#e0607a;background:#4a1a2618; }
+  .preflight[hidden] { display:none; }
+  .update-banner { position:relative;margin:8px 0 2px;padding:8px 30px 8px 11px;border:1px solid #8b71b24d;border-radius:9px;background:#c3b0f712;font-size:11.5px;line-height:1.45;color:var(--text); }
+  .update-banner[hidden] { display:none; }
+  .update-banner.update-ready { display:flex;align-items:center;justify-content:space-between;gap:10px;padding-right:11px;border-color:#c3b0f780; }
+  .update-banner.update-ready button { flex:none;padding:5px 11px;font-size:11.5px; }
+  .preflight strong { display:block;margin-bottom:4px;color:var(--text); }
+  .preflight ul { margin:0 0 6px;padding-left:18px; }
+  .preflight li[data-level="error"] { color:#ffb3c1; }
+  .preflight li[data-level="warning"] { color:#ffd9a0; }
+  .preflight .toolbar { margin:4px 0 0; }
+  #backgroundModeBtn.background-mode-btn { display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:9px 12px;border:1px solid #7fd8ff;border-radius:9px;background:linear-gradient(120deg,#1d3a52,#2b2350 60%,#3a2457);color:#d9f3ff;font-weight:600;letter-spacing:.2px;box-shadow:0 0 0 1px #7fd8ff22,0 0 14px #5ec8ff33; }
+  #backgroundModeBtn.background-mode-btn::before { content:'';width:8px;height:8px;border-radius:50%;background:#7fd8ff;box-shadow:0 0 6px #7fd8ff; }
+  #backgroundModeBtn.background-mode-btn:hover:not(:disabled) { border-color:#a8e6ff;box-shadow:0 0 0 1px #a8e6ff44,0 0 18px #5ec8ff55; }
+  #backgroundModeBtn.background-mode-btn:disabled { opacity:.55;cursor:default; }
+  #backgroundModeBtn.background-mode-btn[hidden] { display:none; }
+  #backgroundModeBtn.background-active { border-color:#61d1ab;background:linear-gradient(120deg,#16392f,#1f3a33);color:#95edce;box-shadow:0 0 0 1px #61d1ab33,0 0 14px #61d1ab44; }
+  #backgroundModeBtn.background-active::before { background:#61d1ab;box-shadow:0 0 6px #61d1ab;animation:background-pulse 1.6s ease-in-out infinite; }
+  @keyframes background-pulse { 50% { opacity:.35; } }
+  @media (prefers-reduced-motion:reduce) { #backgroundModeBtn.background-active::before { animation:none; } }
+  #backgroundModeDialog { width:min(450px,calc(100% - 36px));box-sizing:border-box;padding:22px;border:1px solid #8061af;border-radius:14px;background:#1b1725;color:#f2edf9; }
+  #backgroundModeDialog::backdrop { background:#080710bb; }
+  #backgroundModeDialog h2 { font-size:18px;margin-top:0; }
+  #backgroundModeDialog p,#backgroundModeDialog li { font-size:13px;line-height:1.6; }
+  #backgroundModeDialog .capture-note { padding:10px;border:1px solid #493e59;border-radius:8px; }
+  #flowActivityWarning { width:min(420px,calc(100% - 48px));box-sizing:border-box;padding:22px;border:1px solid #dbb06b;border-radius:14px;background:#1b1725;color:#f2edf9;box-shadow:0 15px 60px #0008; }
+  #flowActivityWarning::backdrop { background:#080710bb; }
+  #flowActivityWarning h2 { color:#f3c77f;font-size:17px;margin-top:0; }
+  #flowActivityWarning p { font-size:13px;line-height:1.6;color:#d4ccdf; }
+  .repair-indicator { --repair-color:#8a819a;display:inline-flex;align-items:center;gap:9px;max-width:100%;box-sizing:border-box;padding:6px 10px;font-size:10px;font-weight:600;letter-spacing:.25px;line-height:1.3;color:var(--repair-color);margin-top:7px;border:1px solid color-mix(in srgb,var(--repair-color) 28%,transparent);border-radius:7px;background:linear-gradient(110deg,color-mix(in srgb,var(--repair-color) 10%,#14111f),#14111f);box-shadow:inset 0 1px 0 #ffffff08,0 2px 8px #00000024; }
+  .repair-light-label { padding-left:9px;border-left:1px solid color-mix(in srgb,var(--repair-color) 25%,transparent);white-space:nowrap; }
+  .repair-indicator[data-state="connected"] { --repair-color:#78e3b7; }
+  .repair-indicator[data-state="active"] { --repair-color:#c1a0ff;box-shadow:inset 0 1px 0 #ffffff08,0 0 12px #a77dff16; }
+  .repair-indicator[data-state="checking"] { --repair-color:#81b9ff; }
+  .repair-indicator[data-state="update"] { --repair-color:#edb65d;color:#edb65d; }
+  .repair-indicator[data-state="update"] .repair-light { background:#edb65d;animation:repair-connected 2.8s ease-in-out infinite; }
+  .repair-indicator[data-state="unavailable"] { --repair-color:#edb65d; }
+  .repair-light-strip { display:inline-flex;align-items:center;gap:4px;flex:none; }
+  .repair-light { width:4px;height:4px;border-radius:50%;background:#777080;flex:none; }
+  .repair-indicator .repair-light-strip .repair-light:nth-child(2) { animation-delay:.12s; }
+  .repair-indicator .repair-light-strip .repair-light:nth-child(3) { animation-delay:.24s; }
+  .repair-indicator .repair-light-strip .repair-light:nth-child(4) { animation-delay:.36s; }
+  .repair-indicator .repair-light-strip .repair-light:nth-child(5) { animation-delay:.48s; }
+  .repair-indicator .repair-light-strip .repair-light:nth-child(6) { animation-delay:.60s; }
+  .repair-indicator .repair-light-strip .repair-light:nth-child(7) { animation-delay:.72s; }
+  .repair-indicator[data-state="connected"] { color:#8be7be; }
+  .repair-indicator[data-state="connected"] .repair-light { background:#67dfae;animation:repair-connected 2.8s ease-in-out infinite; }
+  .repair-indicator[data-state="active"] { color:#cbb1ff; }
+  .repair-indicator[data-state="active"] .repair-light { background:#b994ff;animation:repair-pulse 1s ease-in-out infinite; }
+  .repair-indicator[data-state="checking"] .repair-light { background:#81b9ff;animation:repair-connected 1.8s ease-in-out infinite; }
+  .repair-indicator[data-state="unavailable"] { color:#edb65d; }
+  .repair-indicator[data-state="unavailable"] .repair-light { background:#edb65d; }
+  @keyframes repair-connected { 0%,100% { opacity:.35;transform:scale(.85);box-shadow:0 0 1px currentColor; } 50% { opacity:1;transform:scale(1.15);box-shadow:0 0 7px currentColor; } }
+  @keyframes repair-pulse { 0%,100% { opacity:.35;box-shadow:0 0 1px #b994ff44; } 50% { opacity:1;box-shadow:0 0 9px #b994ffaa; } }
+  @media (prefers-reduced-motion:reduce) { .repair-indicator .repair-light { animation:none !important; } }
+  .follow-button { flex-shrink:0;padding:7px 12px;border:1px solid #8b71b2;border-radius:9px;background:linear-gradient(125deg,#483362,#29233b);color:#f3ecff;font-size:12px;font-weight:600;text-decoration:none;white-space:nowrap; }
+  .follow-button:hover { background:#503b70;border-color:#b399db; }
+  .follow-button:focus-visible { outline:2px solid #c0a0f8;outline-offset:3px; }
+  @media(max-width:360px) { .brand-row { flex-wrap:wrap; } .follow-button { margin-left:auto; } }
+  .brand-mark { width:44px;height:44px;flex-shrink:0;object-fit:cover;border-radius:12px;border:1px solid #64768a;box-shadow:0 0 24px #8070ff22; }
+  .brand-label { font-size:9px;letter-spacing:2px;color:#a99bfa;font-weight:700; }
+  h1 { font-size:19px;letter-spacing:-.5px; }
+  .top-tabs { padding:4px;border:1px solid #293349;border-radius:12px;background:#101725;gap:4px; }
+  .top-tab { border:0;border-radius:8px;padding:8px; }
+  .top-tab[aria-selected="true"] { color:#e4ddff;background:#30294d;box-shadow:inset 0 0 0 1px #665785; }
+  .card { border-radius:15px;padding:15px;margin-bottom:13px;background:linear-gradient(145deg,#151d2c,#101725);border-color:#263249;box-shadow:0 8px 24px #00000016; }
+  h2 { font-size:13px;font-weight:650;letter-spacing:.15px; }
+  .card-head { margin-bottom:13px; }
+  button,select,input { min-height:36px;border-radius:9px; }
+  button.primary { color:#091d1a;background:linear-gradient(120deg,#68dfbd,#41b6b6);border-color:#6ce4c3;font-weight:700; }
+  .mode-btn { min-height:44px;background:#101724;border-color:#2a364b; }
+  .mode-btn[aria-pressed="true"] { background:linear-gradient(120deg,#173b38,#1e3141);border-color:#53c9b0;color:#a6f4de; }
+  .dropzone { min-height:104px;border-color:#46506d;background:linear-gradient(135deg,#171d32,#101925); }
+  .dropzone:hover { border-color:#a798ff;color:#d4ccff; }
+  textarea { min-height:145px;font-family:Segoe UI,Arial,sans-serif;font-size:13px;line-height:1.65;background:#0c1321; }
+  #promptText { font-size:11.5px;line-height:1.55; }
+  input:focus,select:focus,textarea:focus { outline:2px solid #a798ff;outline-offset:2px; }
+  .prompt-config { background:#0d1523;border-radius:12px;border-color:#2a374e;padding:13px; }
+  .prompt-config strong { font-size:13px; }
+  .prompt-config .thumbs { display:grid;grid-template-columns:repeat(5,minmax(0,44px));gap:6px; }
+  .prompt-config .thumb { width:100%;height:52px;border-radius:6px; }
+  .prompt-config .thumb .nm { padding:1px 2px;font-size:8px; }
+  .queue-item { border-radius:11px;background:#0e1726; }
+  .queue-item.is-running { background:linear-gradient(120deg,#211e3c,#142535);border-color:#8672d0; }
+  #progressBar { background:linear-gradient(90deg,#a798ff,#58d8b0); }
+  .empty-state { padding:25px 18px;text-align:center;color:var(--muted);font-size:12px; }
+  #promptModes:empty { min-height:48px; }
+  .sub { margin:9px 0 11px; }
+  .badge { padding:3px 9px; font-size:10px; }
+  .b-running { background:#46396d;color:#e6dfff; }
+  footer { padding:8px 4px 12px; }
+  /* Violet glass panels and beveled edges inspired by the supplied design. */
+  :root { --bg:#100e1b;--card:#191827;--line:#40365f;--muted:#aaa6bd;--text:#f3f1fc;--green:#b9eae6;--blue:#bba8ff; }
+  body { background:radial-gradient(ellipse at 100% 0,#32224b88,transparent 480px),radial-gradient(ellipse at 0 80%,#15395144,transparent 600px),var(--bg); }
+  .app-header { background:#100e1bf5;border-bottom-color:#342b4e; }
+  .brand-mark { border-color:#8173ab;box-shadow:0 0 22px #9673ff33; }
+  .brand-label { color:#c3b0f7;letter-spacing:2.3px; }
+  h1 { font-size:18px;font-weight:700; }
+  .top-tabs { background:#191624;border-color:#443557;border-radius:14px; }
+  /* Always shown (owner 2026-10-16): a short 0xFlow summary when idle; while a queue runs it becomes the reminder
+     to keep the panel open (the queue lives in this panel, so closing it stops the queue). */
+  .keep-open-hint { display:flex;align-items:center;gap:7px;margin:8px 2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:6px 10px;border:1px solid #b798ff2e;border-radius:9px;background:#b798ff0d;color:#cdbdf0;font-size:11px;line-height:1.4; }
+  .keep-open-hint[hidden] { display:none; }
+  /* Plan card at the top of Control (usage-limit.js; owner 2026-10-27). */
+  .usage-card { margin:0 0 10px;border:1px solid #b798ff40;border-radius:10px;overflow:hidden;background:#15111f;box-shadow:0 4px 16px #0004; }
+  .usage-card[hidden],.usage-card [hidden] { display:none; }
+  .tutorial-card { display:flex;align-items:center;gap:6px;margin:0 0 10px;padding:4px;border:1px solid #ff6b6b40;border-radius:10px;background:linear-gradient(110deg,#2a1622,#15111f); }
+  .tutorial-card[hidden] { display:none; }
+  .tutorial-card .tutorial-open { flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:6px;border:0;border-radius:7px;background:transparent;color:#f3ecff;text-align:left;font:600 12px 'Segoe UI',system-ui,sans-serif;cursor:pointer; }
+  .tutorial-card .tutorial-open:hover,.tutorial-card .tutorial-open:focus-visible { background:#ff6b6b18; }
+  .tutorial-card .tutorial-play { display:grid;place-items:center;flex:none;width:28px;height:20px;border-radius:6px;background:#e53935;color:#fff; }
+  .tutorial-card .tutorial-play svg { width:12px;height:12px; }
+  .tutorial-card small { display:block;color:#bcb0ce;font-weight:400;font-size:11px; }
+  .tutorial-card .tutorial-close { flex:none;width:26px;height:26px;min-height:26px;padding:0;border:0;border-radius:6px;background:transparent;color:#aea2bd;font-size:16px;cursor:pointer; }
+  .tutorial-card .tutorial-close:hover,.tutorial-card .tutorial-close:focus-visible { background:#ffffff12;color:#fff; }
+  .usage-head { display:flex;align-items:center;gap:6px;padding:4px 8px;background:linear-gradient(110deg,#3b2a63,#21414a);color:#f3ecff;font-size:11px; }
+  .usage-plan,.usage-count { font-size:11px;font-weight:750;letter-spacing:1.7px;text-transform:uppercase; }
+  .usage-plan { color:#f0deff;white-space:nowrap; }
+  .usage-plan.is-paid { display:inline-flex;align-items:center;gap:4px;padding:2px 6px;border-radius:5px;background:linear-gradient(110deg,#c5a6ff,#91e5e1);color:#211432;line-height:1.2; }
+  .usage-pro-icon { width:12px;height:12px;flex:none;color:#7043af;animation:usageProColor 4s ease-in-out infinite; }
+  @keyframes usageProColor { 0%,100% { color:#7043af; } 35% { color:#12646b; } 70% { color:#963b78; } }
+  @media(prefers-reduced-motion:reduce) { .usage-pro-icon { animation:none; } }
+  .usage-count { font-variant-numeric:tabular-nums;white-space:nowrap;color:#fff; }
+  .usage-account { margin-left:auto;display:flex;align-items:center;gap:3px;min-width:0; }
+  .usage-card .usage-icon { display:inline-flex;align-items:center;justify-content:center;flex:none;box-sizing:border-box;width:24px;height:24px;min-height:24px;padding:3px;border:1px solid #ffffff2e;border-radius:6px;background:#ffffff0b;color:#e8dfff;cursor:pointer; }
+  .usage-icon svg,.usage-provider svg { width:16px;height:16px;display:block; }
+  .usage-provider { display:flex;align-items:center;gap:5px;min-width:0; }
+  .usage-provider svg { flex:none; }
+  .usage-identity { max-width:140px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px; }
+  .usage-icon:hover { background:#ffffff22; }
+  .usage-icon:focus-visible { outline:2px solid #c5a6ff;outline-offset:1px; }
+  .usage-refresh.spin i { display:inline-block;animation:usageSpin .8s linear infinite; }
+  .usage-refresh i { font-style:normal;font-size:17px; }
+  @keyframes usageSpin { to { transform:rotate(360deg); } }
+  .usage-body { display:grid;gap:3px;padding:3px 6px 4px; }
+  .usage-meter { height:3px;background:#ffffff12;overflow:hidden; }
+  .usage-meter>span { display:block;height:100%;width:100%;background:linear-gradient(90deg,#c0a1ff,#8ce3dc);transition:width .4s; }
+  .usage-card.is-low .usage-meter>span { background:linear-gradient(90deg,#ffcf97,#ffa36b); }
+  .usage-card.is-out .usage-meter>span { background:#ff8fa8; }
+  .usage-card.is-out .usage-count { color:#ffb3c2; }
+  .usage-card .usage-upgrade { display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:30px;min-height:30px;padding:3px 10px;border:1px solid #c8b0ff55;border-radius:7px;color:#eadfff;background:#c8b0ff35;box-shadow:none;font:600 12px "Segoe UI",sans-serif;cursor:pointer; }
+  .usage-upgrade > svg { width:18px;height:18px;flex:none; }
+  .usage-upgrade:disabled { opacity:.6; }
+  .usage-card .usage-upgrade:hover:not(:disabled) { background:#c8b0ff45; }
+  .usage-card.is-unlimited .usage-body,.usage-card.is-unlimited .usage-meter { display:none; }
+  .usage-card.is-unlimited.is-renew .usage-body { display:grid; }
+  .usage-card.is-unlimited .usage-plan,.usage-card.is-unlimited .usage-count { font-size:10px;letter-spacing:1.2px; }
+  #usageLineStatus { display:block;color:#a79fbb;font-size:10.5px;text-align:center; }
+  #usageLineStatus:empty { display:none; }
+  @media(max-width:379px){.usage-identity{display:none}.usage-head{gap:5px}}
+  .keep-open-hint > span:first-child { color:#9ee8e1;font-size:13px;flex:none; }
+  .keep-open-hint.is-running { border-color:#9ee8e14d;background:#9ee8e10f;color:#d6f5f1; }
+  .top-tab { color:#b8b2cc; }
+  .top-tab[aria-selected="true"] { background:linear-gradient(130deg,#3b2d59,#262439);color:#f5edff;box-shadow:inset 0 0 0 1px #786399,0 3px 14px #a889ff16; }
+  .card { position:relative;isolation:isolate;border:0;background:transparent;padding:17px;margin-bottom:15px;box-shadow:none; }
+  .card::before,.card::after { content:'';position:absolute;inset:0;z-index:-2;pointer-events:none;clip-path:polygon(22px 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%,0 22px); }
+  .card::before { background:linear-gradient(120deg,#554472 0%,#3b3055 38%,#302a45 62%,#8871b6 100%); }
+  .card::after { inset:1px;z-index:-1;background:linear-gradient(130deg,#1d1b2c,#161522); }
+  #queueCard.is-neon-active::before { background:linear-gradient(110deg,#ae73ff,#66e4f1,#f98ee9,#ae73ff);background-size:300% 300%;animation:queue-neon-flow 3s linear infinite;filter:drop-shadow(0 0 8px #ab79ff); }
+  #queueCard.is-rejection-flash::before { background:linear-gradient(110deg,#ff4567,#ff9a9a,#ff4567);animation:queue-rejection-blink .42s ease-in-out 3;filter:drop-shadow(0 0 10px #ff4567); }
+  @keyframes queue-neon-flow { from { background-position:0% 50%; } to { background-position:100% 50%; } }
+  @keyframes queue-rejection-blink { 0%,100% { opacity:.25; } 50% { opacity:1; } }
+  @media (prefers-reduced-motion:reduce) { #queueCard.is-neon-active::before,#queueCard.is-rejection-flash::before { animation:none; } #queueCard.is-rejection-flash::before { background:#ff4567; } }
+  .card .card { padding:13px; }
+  .card-head h2 { color:#f0eafa;letter-spacing:.2px; }
+  button { background:#282237;border-color:#4b3e61;color:#eae4f4;transition:background .2s,box-shadow .2s; }
+  button.primary { background:linear-gradient(115deg,#c4b0fa 0%,#b5e8ef 60%,#ffe6b2 100%);border-color:#ddd0ff;color:#191329;box-shadow:0 4px 18px #b1a1ed22; }
+  button.primary:hover:not(:disabled) { box-shadow:0 4px 22px #baa4ff55; }
+  button.danger { background:#462b40;border-color:#925375; }
+  .mode-btn { background:#191726;border-color:#39324e;color:#c8c1d7; }
+  .mode-btn[aria-pressed="true"] { background:linear-gradient(120deg,#3c2d55,#223847);border-color:#a18bcf;color:#f0e7ff;box-shadow:inset 3px 0 #b497fa; }
+  input,select,textarea { background:#12111e;border-color:#443852;color:#eee8f7; }
+  input:focus,select:focus,textarea:focus { outline-color:#c0a0f8; }
+  .dropzone { background:linear-gradient(135deg,#242034,#151b29);border-color:#675380;border-radius:12px; }
+  .prompt-config { background:#181625;border-color:#4a3d65;border-radius:12px; }
+  .queue-item { position:relative;background:#171522;border-color:#403453;border-radius:12px; }
+  .queue-item.is-running { background:linear-gradient(110deg,#29203f,#1b2938);border-color:#9580c8;box-shadow:inset 4px 0 #a989f5,0 0 18px #9579df16; }
+  #queueWrap { border-color:#372d48;background:#110f1a55; }
+  .badge { border:1px solid #ffffff12; }
+  .b-human-repair { color:#ffe1a3;background:#70532255;border-color:#dca74766;white-space:nowrap; }
+  .b-running { background:#51406d;color:#eee4ff; }
+  #progressBar { background:linear-gradient(90deg,#ac87f4,#a8e3ed);box-shadow:0 0 10px #a88bff55; }
+  .settings-section { border-color:#3a304d; }
+  .settings-section h3 { color:#c9b8ee; }
+  footer { color:#9b8eaf; }
+  .card-accent { position:absolute;pointer-events:none; }
+  .card-accent.violet { left:0;top:50%;transform:translateY(-50%);width:7px;height:clamp(54px,35%,96px);background:linear-gradient(90deg,#7d57db,#b49aff);clip-path:polygon(0 0,100% 7px,100% calc(100% - 7px),0 100%);filter:drop-shadow(0 0 7px #9468f066); }
+  .run-settings-grid { display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:14px; }
+  .run-settings-grid .field { min-width:0; }
+  .delay-range { display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:9px; }
+  .delay-range input { width:100%;min-width:0; }
+  @media (max-width:360px) { .run-settings-grid { grid-template-columns:1fr;gap:10px; } }
+  .flow-progress-track.is-saving .flow-progress-fill { width:100%;animation:saving-pulse 1.8s ease-in-out infinite;background:repeating-linear-gradient(115deg,#6b55a4 0 12px,#b897ef 12px 24px,#88b5c5 24px 36px);background-size:120px 100%;box-shadow:0 0 12px #b897ef55; }
+  .flow-progress-track.is-saving .flow-progress-fill::after { animation:none;background:none; }
+  @keyframes saving-pulse { 0% { background-position:0 0;opacity:.7; } 50% { opacity:1; } 100% { background-position:120px 0;opacity:.7; } }
+  .flow-progress-track.is-complete + .flow-progress-label { color:#8fe8bf; }
+  @media (prefers-reduced-motion:reduce) { .flow-progress-track.is-saving .flow-progress-fill { animation:none; } }
+.pager { justify-content:space-between; } #queueHeading { scroll-margin-top:210px; }
+  #promptCardsDisclosure > summary { display:flex;align-items:center;gap:10px;margin:10px 0 12px;padding:11px 13px;border:1px solid #655381;border-radius:10px;background:linear-gradient(100deg,#3c2b63,#2c5068 55%,#211d32);color:#f4eeff;font-weight:650;box-shadow:0 3px 16px #9774e81a;cursor:pointer;list-style:none; }
+  #promptCardsDisclosure > summary::-webkit-details-marker { display:none; }
+  #promptCardsDisclosure > summary::before { content:'◈';display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#cab3ff26;color:#dfd0ff;font-size:17px;flex-shrink:0; }
+  #promptCardsDisclosure > summary::after { content:'Expand ▾';margin-left:auto;font-size:11px;color:#d0deed;font-weight:500; }
+  #promptCardsDisclosure[open] > summary::after { content:'Collapse ▴'; }
+.prompt-total { padding:2px 8px;border-radius:99px;background:#d8c5ff1c;border:1px solid #c6b0f644;color:#eee5ff;font-size:11px;font-weight:600;white-space:nowrap; } @media(max-width:400px) { #promptCardsDisclosure > summary { flex-wrap:wrap; } }
+  .repair-guide { font-size:12px;line-height:1.65;color:#c9c3da; }
+  .repair-guide h2 { font-size:15px;color:#f3efff; }
+  .repair-guide ol { padding-left:22px; }
+  .repair-guide li { margin-bottom:14px;padding-left:3px; }
+  .repair-guide strong { color:#f0eaff; }
+  .repair-guide a { color:#c4afff;text-underline-offset:3px; }
+  .repair-guide .companion-download { display:inline-block;padding:9px 13px;border:1px solid #8e71b7;border-radius:8px;background:linear-gradient(120deg,#493366,#292239);color:#f1e8ff;font-weight:600;text-decoration:none; }
+  .repair-guide .companion-download:hover { background:#493366; }
+  .repair-guide pre { padding:10px;border:1px solid #4b3d63;border-radius:8px;background:#100e1b;white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px; }
+  .repair-guide code { overflow-wrap:anywhere; }
+  .repair-guide summary { color:#e4d5ff;cursor:pointer;font-weight:600; }
+  .repair-tip { padding:11px 12px;border-left:3px solid #aa87f4;border-radius:6px;background:#ab85f410; }
+  .flow-progress-track.is-chatgpt-running .flow-progress-fill { animation:chatgpt-progress-glow 1.8s ease-in-out infinite; }
+  @keyframes chatgpt-progress-glow { 50% { filter:brightness(1.2); } }
+  @media(prefers-reduced-motion:reduce) { .flow-progress-track.is-chatgpt-running .flow-progress-fill { animation:none; } }
+  .flow-progress-track.is-complete + .flow-progress-label { color:#c4a4ff; }
+  .platform-field { position:relative;isolation:isolate;margin:0 0 15px;padding:11px 13px 9px;border:1px solid #8c65dd;border-left:3px solid #bc91ff;border-radius:10px;background:linear-gradient(120deg,#281d43 0%,#171a32 65%,#152a32);box-shadow:0 0 22px #a477ff20,inset 0 1px 0 #d1adff24;overflow:hidden; }
+  .platform-field::before { content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,#b98aff,#dfbdff 38%,#67e6ed 80%,transparent);pointer-events:none; }
+  .platform-field::after { content:"";position:absolute;right:13px;top:14px;width:38px;height:5px;background:linear-gradient(90deg,#bd8aff,#ea9fde,#7ce7ef);mask-image:radial-gradient(circle at 2.5px 2.5px,#000 2px,transparent 2.5px);mask-size:8px 5px;mask-repeat:repeat-x;opacity:.5;pointer-events:none;filter:drop-shadow(0 0 3px #a88aff);animation:platform-heartbeat 2.4s ease-in-out infinite; }
+  @keyframes platform-heartbeat { 0%,35%,100% { opacity:.4;filter:drop-shadow(0 0 2px #a88aff); } 12%,25% { opacity:1;filter:drop-shadow(0 0 5px #7ce7ef); } 18% { opacity:.55; } }
+  @media(prefers-reduced-motion:reduce) { .platform-field::after { animation:none;opacity:.8; } }
+  .platform-field > label { display:block;margin-bottom:8px;color:#f0deff;font-size:11px;font-weight:750;letter-spacing:1.7px;text-transform:uppercase; }
+  .platform-field > .platform-label { display:block;margin-bottom:8px;color:#f0deff;font-size:11px;font-weight:750;letter-spacing:1.7px;text-transform:uppercase; }
+  /* Two rows of three at every width (owner 2026-11-09: a wide panel put all 6 on one cramped row). */
+  .platform-tabs { display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;padding:4px;border:1px solid #ffffff12;border-radius:12px;background:#0e0c16; }
+  .platform-tab { display:flex;align-items:center;justify-content:center;gap:6px;min-width:0;min-height:36px;padding:7px 8px;border:1px solid transparent;border-radius:9px;background:transparent;color:#a9a1bd;font-size:12.5px;font-weight:600;white-space:nowrap;cursor:pointer;transition:background .15s,color .15s; }
+  .platform-tab:nth-child(-n+4) { grid-column:span 3; }
+  .platform-tab:nth-child(n+5) { grid-column:span 4; }
+  .platform-tab img { flex:none;width:16px;height:16px;object-fit:contain;opacity:.7;transition:opacity .15s; }
+  .platform-tab span { overflow:hidden;text-overflow:ellipsis; }
+  .platform-tab:hover:not(:disabled):not([aria-checked="true"]) { background:#ffffff0a;color:#e6dcf7; }
+  .platform-tab[aria-checked="true"] { border-color:#b28af266;background:linear-gradient(110deg,#c5a6ff38,#91e5e124);color:#fff;box-shadow:0 0 14px #b28bff1f; }
+  .platform-tab[aria-checked="true"] img, .platform-tab:hover:not(:disabled) img { opacity:1; }
+  .platform-tab:focus-visible { outline:2px solid #7ce7ef;outline-offset:1px; }
+  .platform-tab:disabled { cursor:default;opacity:.55; }
+  .platform-tab:disabled[aria-checked="true"] { opacity:1; }
+  /* Narrow side panels: tighter tabs so every logo and name fits (measured at 400px). */
+  @media(max-width:480px) { .platform-tabs { gap:2px;padding:3px; } .platform-tab { gap:4px;padding:7px 2px;font-size:11.5px; } .platform-tab img { width:14px;height:14px; } }
+  @media(max-width:380px) { .platform-tab { flex-direction:column;gap:3px; } .platform-tab span { max-width:100%;white-space:normal;overflow-wrap:anywhere; } }
+  #platformNotice { margin:6px 2px 0;color:#9d95b3;font-size:9px;line-height:1.35;letter-spacing:.1px; }
+  /* Compact queue: retain all queue controls and progress semantics. */
+  #queueCard { padding:14px; }
+  #queueCard .card-head { margin-bottom:10px; }
+  #queueCard > .pager { gap:8px;margin-bottom:10px; }
+  #queueCard > .pager select { min-height:32px;font-size:11px; }
+  #queueCard > .pager button { min-height:26px;padding:2px 7px; }
+  #queuePageInfo { font-size:10px; }
+  #queueWrap { max-height:440px;border:0;background:transparent;border-radius:0; }
+  #queueWrap > .queue-summary { padding:0 0 10px;font-size:11px;color:var(--muted); }
+  #queueBody { display:grid;gap:9px; }
+  #queueBody .queue-item { min-width:0;margin:0;padding:11px 13px;gap:6px 10px;border:1px solid #ffffff14;border-radius:13px;background:#11101b; }
+  #queueBody .queue-item > strong { font-size:12px;align-self:center; }
+  #queueBody .queue-item.is-running { background:linear-gradient(110deg,#1c172a,#11101b);border-color:#a989f566;box-shadow:inset 3px 0 #b496ff; }
+  #queueBody .badge { padding:3px 8px;font-size:9px;line-height:1.5;border:0; }
+  #queueBody .queue-prompt { min-width:0;line-height:1.5; }
+  #queueBody .queue-prompt > .muted:empty, #queueBody .queue-actions:empty { display:none; }
+  #queueBody .queue-actions { gap:6px; }
+  #queueBody .queue-actions button { min-height:23px;padding:2px 8px;font-size:10px; }
+  #queueBody .item-progress { margin-top:6px;gap:8px; }
+  #queueBody .flow-progress-track { height:5px;border:0;box-shadow:none; }
+  #queueBody .flow-progress-label { font-size:9px;min-width:38px; }
+  #queueBody .queue-output-name { font-size:9px; }
+  #runCard { padding:18px;border-radius:16px; }
+  #runCard .progress { height:6px;border:0; }
+  #runCard .stats { font-size:10px;margin-top:8px; }
+  #runCard .run-actions { margin-top:18px;gap:8px; }
+  #runCard #startBtn { flex:1;min-width:160px;padding:11px 16px;border:0;border-radius:10px;color:#171324;font-weight:700;background:linear-gradient(110deg,#c5a6ff,#91e5e1);box-shadow:0 4px 18px #b28bff24; }
+  #runCard #startBtn:disabled { opacity:.5; }
+  #runCard[data-running="true"] #startBtn { opacity:1;color:#e2d6fc;background:linear-gradient(110deg,#67528c,#395c68); }
+  #runCard #stopBtn { padding:10px 14px;border-color:#f886a940;background:#f886a90a;color:#f6aab9;border-radius:10px; }
+  #runCard #retryErrorsBtn { padding:10px 12px;font-size:11px;border-radius:10px;background:#ffffff05;color:#d2c4ed; }
+  #runCard .run-secondary { display:flex;flex-direction:column;align-items:stretch;border-top:1px solid #ffffff0b;margin-top:14px;padding-top:4px; }
+  #runCard #backgroundModeBtn { justify-content:flex-start;text-align:left;padding:12px 14px;border-color:#9a83ff65;border-radius:12px;background:linear-gradient(110deg,#7657b524,#4fc6d318);box-shadow:0 0 14px #a783ff10;font-size:12px; }
+  #runCard #backgroundModeBtn::before { display:none; }
+  #runCard #backgroundModeBtn::after { content:'Off';margin-left:auto;min-width:36px;padding:3px 7px;border-radius:20px;background:#40364e;color:#c1b6d2;font-size:10px;text-align:center; }
+  #runCard #backgroundModeBtn.background-active { border-color:#71e0c395;background:linear-gradient(110deg,#7657b528,#4fc6a328); }
+  #runCard #backgroundModeBtn.background-active::after { content:'On';background:#70599c;color:#9ef0df; }
+  #runCard #backgroundModeStatus { font-size:10px;margin-top:6px;color:var(--muted); }
+  #runCard button:focus-visible { outline:2px solid #80e5ed;outline-offset:3px; }
+  @media(max-width:400px) { #runCard #startBtn { flex-basis:100%; } #runCard #stopBtn,#runCard #retryErrorsBtn { flex:1; } }
+  #runCard #backgroundModeBtn { gap:12px;letter-spacing:0; }
+  #runCard #backgroundModeBtn::after { display:none; }
+  .background-copy { display:flex;flex-direction:column;gap:2px; }
+  .background-copy strong { font-size:13px; }
+  .background-copy small { font-size:10px;font-weight:400;color:#b4acc8; }
+  .background-state { font-size:10px;color:#bcb0d7;font-weight:400; }
+  .background-state::before { content:'Off'; }
+  .background-active .background-state::before { content:'On';color:#8deacc; }
+  .background-switch { position:relative;flex-shrink:0;margin-left:auto;width:38px;height:22px;border-radius:20px;background:#40364e; }
+  .background-switch::before { content:'';position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#c1b6d2;transition:transform .2s; }
+  .background-active .background-switch { background:#70599c; }
+  .background-active .background-switch::before { transform:translateX(16px);background:#9ef0df; }
+  @media(prefers-reduced-motion:reduce) { .background-switch::before { transition:none; } }
+  #runCard #backgroundModeBtn { font-family:'Segoe UI',Arial,sans-serif;font-weight:400; }
+  #runCard .background-copy { flex:1;min-width:0; }
+  #runCard .background-copy strong { font-family:inherit;font-size:13px;font-weight:600;line-height:1.4; }
+  #runCard .background-copy small { font-family:inherit;font-size:11px;line-height:1.4; }
+  #runCard .background-state { margin-left:auto;min-width:20px;text-align:right;font-size:11px;line-height:22px; }
+  #runCard .background-switch { margin-left:2px; }
+  #runCard[data-running="true"] #startBtn {
+    position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:10px;
+    min-height:45px;border:1px solid #c5a6ff80;color:#f8f3ff;
+    background:linear-gradient(115deg,#6945a5,#513b83 45%,#236b78);
+    box-shadow:inset 0 1px 0 #e5cfff25,0 0 20px #aa78ff25;
+    letter-spacing:.2px;opacity:1;
+  }
+  #runCard[data-running="true"] #startBtn::before {
+    content:'';flex:0 0 15px;width:15px;height:15px;border-radius:50%;
+    border:2px solid #ffffff30;border-top-color:#e5cfff;border-right-color:#8bf2e7;
+    box-shadow:0 0 9px #bd9aff40;animation:run-orbit 1s linear infinite;
+  }
+  #runCard[data-running="true"] #startBtn::after {
+    content:'';position:absolute;z-index:-1;inset:0;
+    background:linear-gradient(110deg,transparent 20%,#d4bdff24 48%,#8feee51c 52%,transparent 80%);
+    transform:translateX(-110%);animation:run-sheen 3.2s ease-in-out infinite;pointer-events:none;
+  }
+  #runCard[data-running="true"] #runState { color:#a9f0df;padding:3px 9px;border:1px solid #82e4ce25;border-radius:20px;background:#82e4ce0a;font-size:10px; }
+  @keyframes run-orbit { to { transform:rotate(360deg); } }
+  @keyframes run-sheen { 60%,100% { transform:translateX(110%); } }
+  @media(prefers-reduced-motion:reduce) { #runCard[data-running="true"] #startBtn::before,#runCard[data-running="true"] #startBtn::after { animation:none; } }
+
+.header-tools { display:flex;gap:3px;align-items:center;flex-shrink:0; }
+.header-tools button { display:grid;place-items:center;width:29px;height:30px;min-height:30px;padding:0;border:1px solid transparent;border-radius:7px;background:transparent;color:#afa4bf;font:17px 'Segoe UI',sans-serif; }
+.header-tools button:hover:not(:disabled) { background:#b798ff13;border-color:#b798ff33;color:#e1ceff; }
+.header-tools #headerUpdateBtn { color:#a4eee0;background:#80e4d810;border-color:#80e4d830; }
+.utility-dialog { width:calc(100% - 28px);max-width:460px;padding:0;border:1px solid #78618f70;border-radius:15px;color:#eee8f7;background:#171522;box-shadow:0 24px 80px #0008; }
+.utility-dialog .whats-new-version { margin:0 0 10px;color:#d8cdea;font-weight:600; }
+.utility-dialog .whats-new-list { list-style:none;margin:0;padding:0;display:grid;gap:8px; }
+.utility-dialog .whats-new-list li { display:flex;gap:9px;align-items:baseline;color:#cfc5df;font-size:12px;line-height:1.5; }
+.utility-dialog .whats-new-tag { flex:none;min-width:44px;padding:1px 7px;border-radius:999px;font-size:10px;font-weight:700;text-align:center;letter-spacing:.3px; }
+.utility-dialog .whats-new-tag.new { background:#a782ff26;color:#cdb6ff; }
+.utility-dialog .whats-new-tag.fixed { background:#7ce5df1f;color:#9ff0e8; }
+.utility-dialog .whats-new-tag.better { background:#f0c66b1f;color:#f1d48f; }
+.utility-dialog .whats-new-tag.removed { background:#ffffff12;color:#b8b0c8; }
+.utility-dialog::backdrop { background:#050510b0;backdrop-filter:blur(5px); }
+.utility-dialog .utility-head { display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid #ffffff0c;background:linear-gradient(110deg,#a782ff12,#7ce5df06); }
+.utility-dialog h2 { font-size:14px; }.utility-dialog .utility-body { padding:18px;font-size:12px;line-height:1.7; }.utility-dialog p { margin:0 0 12px;color:#bcb1cd; }.utility-dialog .utility-actions { display:flex;justify-content:flex-end;gap:8px;margin-top:16px; }.utility-dialog button { font-size:11px; }
+@media(max-width:480px) { .brand-row { flex-wrap:wrap; }.header-tools { margin-left:auto; }.brand-copy { min-width:0; } }
+  .update-manual-steps { margin:14px 0;padding-left:22px;color:#cec3dd; }
+  .update-manual-steps li { padding:5px 0 5px 4px; }
+  .update-manual-steps li::marker { color:#bba0ef;font-weight:600; }
+
+  .header-tools { gap:6px;padding:4px;border:1px solid #b798ff15;border-radius:12px;background:#ffffff02; }
+  .header-tools button { width:32px;height:32px;min-height:32px;border:1px solid #b798ff16;border-radius:9px;background:linear-gradient(145deg,#b798ff0c,#ffffff02);color:#bcb0ce;transition:color .18s,background .18s,border-color .18s,transform .18s,box-shadow .18s; }
+  .header-tools button svg { width:17px;height:17px;display:block;pointer-events:none; }
+  .header-tools button:hover:not(:disabled) { transform:translateY(-1px);color:#e5d4ff;border-color:#b798ff65;background:linear-gradient(145deg,#b798ff24,#7ce5df0b);box-shadow:0 0 12px #ac85ff18; }
+  .header-tools #headerUpdateBtn { color:#9aeee2;border-color:#80e4d84d;background:linear-gradient(145deg,#80e4d81c,#80e4d806);box-shadow:inset 0 1px #b9fff011; }
+  .header-tools #headerUpdateBtn:hover { box-shadow:0 0 14px #80e4d830;border-color:#9aeee2; }
+  .header-tools #coffeeIconBtn { color:#e8c79a; }
+  .header-tools button:focus-visible { outline:2px solid #bba0ef;outline-offset:3px; }
+  /* Header icon tooltips: small black label under the icon on hover / keyboard focus (replaces the slow native title). */
+  .header-tools button { position:relative; }
+  .header-tools button[data-tip]::after { content:attr(data-tip);position:absolute;top:calc(100% + 7px);left:50%;transform:translate(-50%,-3px);z-index:20;padding:4px 8px;border-radius:6px;background:#000;color:#fff;font:500 11px/1.3 'Segoe UI',Arial,sans-serif;letter-spacing:0;white-space:nowrap;box-shadow:0 4px 14px #0009;opacity:0;pointer-events:none;transition:opacity .12s .25s,transform .12s .25s; }
+  .header-tools button[data-tip]:hover::after, .header-tools button[data-tip]:focus-visible::after { opacity:1;transform:translate(-50%,0); }
+  .header-tools button[data-tip]:last-child::after { left:auto;right:0;transform:translateY(-3px); }
+  .header-tools button[data-tip]:last-child:hover::after, .header-tools button[data-tip]:last-child:focus-visible::after { transform:none; }
+  @media(prefers-reduced-motion:reduce) { .header-tools button[data-tip]::after { transition:none; } }
+  .header-tools button { position:relative; }
+  .header-tools #headerUpdateBtn.has-update { color:#c9b2ff;border-color:#b798ff66;background:#b798ff1a; }
+  .header-tools #headerUpdateBtn.has-update::after { left:auto;right:-40px;transform:translateY(-3px); }
+  .header-tools #headerUpdateBtn.has-update:hover::after, .header-tools #headerUpdateBtn.has-update:focus-visible::after { transform:none; }
+  .header-tools #headerUpdateBtn.has-update::before { content:'';position:absolute;top:-5px;right:-5px;width:13px;height:13px;border-radius:50%;background:#a77bff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23181020' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 2.5v6M3.5 6 6 8.5 8.5 6'/%3E%3C/svg%3E") center/11px no-repeat;box-shadow:0 0 0 2px #120d1c;pointer-events:none; }
+  @media(prefers-reduced-motion:reduce) { .header-tools button { transition:none; }.header-tools button:hover:not(:disabled) { transform:none; } }
+  .update-manual-steps { margin:20px 0;padding-left:25px; }
+  .update-manual-steps li { padding:6px 0 16px 3px;color:#aea5bb;line-height:1.7; }
+  .extensions-step-link { display:block;width:fit-content;margin-top:3px;color:#a6eee0;font-weight:600;text-decoration:underline;text-underline-offset:3px; }
+  .extensions-step-link:hover { color:#d1fff3; }
+  .extensions-step-link:focus-visible { outline:2px solid #bba0ef;outline-offset:3px;border-radius:3px; }
+  .developer-mode-illustration { display:inline-block;position:relative;width:32px;height:19px;margin-right:9px;border-radius:20px;background:#a7c8ff;vertical-align:middle; }
+  .developer-mode-illustration::after { content:'';position:absolute;width:13px;height:13px;right:3px;top:3px;border-radius:50%;background:#193d78; }
+/* Keep header tools beside the brand at every panel width. */
+.brand-row{display:flex;flex-wrap:nowrap;min-width:0;align-items:center}
+.brand-copy{flex:1;min-width:0}.header-tools{flex:none;margin-left:auto}
+.repair-indicator{max-width:100%;gap:7px;padding:6px 8px;letter-spacing:0}
+.repair-light-label{min-width:0;white-space:normal;overflow-wrap:normal;line-height:1.35}
+@media(max-width:600px){
+ .brand-row{flex-wrap:nowrap;gap:8px}
+ .brand-copy h1{font-size:18px;line-height:1.35;overflow-wrap:break-word}
+ .brand-mark{width:40px;height:40px}
+ .brand-label{font-size:8px;letter-spacing:1.5px}
+ .header-tools{margin-left:auto;gap:4px;padding:3px}
+ .header-tools button{width:30px;height:32px;min-width:30px;padding:6px}
+ .header-tools button svg{width:16px;height:16px}
+ .repair-indicator{font-size:9px;gap:5px;padding:5px 6px}
+ .repair-light-strip{gap:3px}.repair-light{width:3px;height:3px}
+ .repair-light-label{padding-left:5px}
+}
+@media(max-width:400px){
+ .brand-row{gap:6px}.brand-mark{width:32px;height:32px;border-radius:9px}
+ .brand-copy h1{font-size:15px}.brand-label{font-size:7px;letter-spacing:.8px}
+ .header-tools{gap:2px;padding:2px}.header-tools button{width:25px;min-width:25px;height:28px;padding:4px}
+ .repair-indicator{font-size:8px;gap:4px;padding:4px}.repair-light-strip{gap:2px}.repair-light-strip .repair-light:nth-child(n+4){display:none}
+}
+/* Compact one-row header (2026-10-15, owner: "small, like TobyFlow"): round logo · 0xFlow · version · repair lights,
+   plain icons on the right. Placed last so it overrides the older header rules above. */
+.app-header{padding:10px 12px 9px}
+.brand-row{gap:9px}
+.brand-mark{width:30px;height:30px;border-radius:50%;box-shadow:none}
+.brand-copy{display:flex;align-items:center;gap:7px;min-width:0;overflow:hidden}
+.brand-copy h1{margin:0;font-size:16px;line-height:1.2;white-space:nowrap;letter-spacing:-.2px}
+.brand-copy h1{display:inline-flex;align-items:center;gap:7px}
+.version-badge{position:static;top:auto;margin:0;padding:2px 6px;font-size:9.5px;line-height:1.3;border-radius:5px;vertical-align:baseline}
+.repair-indicator{flex:none;max-width:100%;min-width:0;gap:5px;padding:2px 7px;font-size:9px;border-radius:999px}
+.repair-indicator .repair-light-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-left:0;border-left:0}
+.brand-copy h1{flex:none}
+.repair-light-strip{gap:3px}.repair-light{width:3px;height:3px}
+.header-tools{gap:2px;padding:0;border:0;background:none}
+.header-tools button{width:28px;height:28px;min-width:28px;min-height:28px;padding:5px;border:0;border-radius:8px;background:none;box-shadow:none}
+.header-tools button svg{width:17px;height:17px}
+.header-tools #headerUpdateBtn{border:0;background:none;box-shadow:none}
+.header-tools #headerUpdateBtn.has-update{background:#b798ff1a}
+/* Repair status (2026-10-15, owner): one line under Background Mode in the Run card + a coloured dot on the Repair tab. */
+.repair-status-line{display:flex;align-items:center;justify-content:center;margin-top:10px;min-width:0}
+.repair-status-line:empty{display:none}
+.repair-status-line .repair-indicator{margin-top:0;padding:6px 11px;gap:8px;border-radius:8px;font-size:10.5px;max-width:100%}
+.repair-status-line .repair-light-strip{padding-left:9px;border-left:1px solid color-mix(in srgb,var(--repair-color) 25%,transparent)}
+/* Connected = the extension's own palette (lavender text on the version-badge purple, dots lavender → teal like
+   the Start button) instead of plain green. Repairing / update / off keep their meaning colours. */
+.repair-status-line .repair-indicator[data-state="connected"]{--repair-color:#c9b6f5;color:#d9cdf7;border-color:#b798ff40;background:linear-gradient(110deg,#2a2140,#14111f)}
+.repair-status-line .repair-indicator[data-state="connected"] .repair-icon{color:#9fe3ee}
+.repair-status-line .repair-indicator[data-state="connected"] .repair-light:nth-child(1){background:#c4a8ff}
+.repair-status-line .repair-indicator[data-state="connected"] .repair-light:nth-child(2){background:#b7b4fb}
+.repair-status-line .repair-indicator[data-state="connected"] .repair-light:nth-child(3){background:#aac0f8}
+.repair-status-line .repair-indicator[data-state="connected"] .repair-light:nth-child(4){background:#9dccf5}
+.repair-status-line .repair-indicator[data-state="connected"] .repair-light:nth-child(5){background:#90d6f3}
+.repair-status-line .repair-indicator[data-state="connected"] .repair-light:nth-child(6){background:#86def2}
+.repair-status-line .repair-indicator[data-state="connected"] .repair-light:nth-child(7){background:#7ee8f2}
+.tab-status-dot[data-state="connected"]{background:#9fe3ee;color:#9fe3ee;box-shadow:0 0 6px #7ee8f280}
+/* ☁ Cloud Repair Connected ●●●●●●● (owner's pick "dot wave", 2026-10-15): the 7 dots light up one after another,
+   coloured by state; faster while repairing; still and dim when off / not ready. */
+.repair-icon{display:inline-flex;flex:none;width:14px;height:14px}
+.repair-icon svg{width:14px;height:14px}
+.repair-indicator .repair-light{opacity:.25;box-shadow:none;animation:none!important}
+.repair-indicator:is([data-state="connected"],[data-state="checking"],[data-state="update"],[data-state="active"]) .repair-light{animation:repair-wave 1.4s ease-in-out infinite!important}
+.repair-indicator[data-state="active"] .repair-light{animation-duration:.9s!important}
+.repair-light-strip .repair-light:nth-child(2){animation-delay:.12s!important}.repair-light-strip .repair-light:nth-child(3){animation-delay:.24s!important}
+.repair-light-strip .repair-light:nth-child(4){animation-delay:.36s!important}.repair-light-strip .repair-light:nth-child(5){animation-delay:.48s!important}
+.repair-light-strip .repair-light:nth-child(6){animation-delay:.6s!important}.repair-light-strip .repair-light:nth-child(7){animation-delay:.72s!important}
+.repair-status-line .repair-light-strip{gap:4px}.repair-status-line .repair-light-strip .repair-light{display:block;width:4px;height:4px}
+@keyframes repair-wave{0%,60%,100%{opacity:.25;transform:scale(1)}30%{opacity:1;transform:scale(1.5)}}
+@media(prefers-reduced-motion:reduce){.repair-indicator .repair-light{animation:none!important;opacity:.8}}
+.tab-status-dot{display:inline-block;width:7px;height:7px;margin-left:6px;border-radius:50%;vertical-align:middle;background:#777080;color:#777080}
+.tab-status-dot[data-state="connected"]{background:#67dfae;color:#67dfae;box-shadow:0 0 6px #67dfae80}
+.tab-status-dot[data-state="active"]{background:#b994ff;color:#b994ff;animation:repair-pulse 1s ease-in-out infinite}
+.tab-status-dot[data-state="checking"]{background:#81b9ff;color:#81b9ff}
+.tab-status-dot:is([data-state="update"],[data-state="unavailable"]){background:#edb65d;color:#edb65d}
+@media(prefers-reduced-motion:reduce){.tab-status-dot{animation:none!important}}
+@media(max-width:400px){.brand-copy h1{font-size:15px}.header-tools button{width:25px;min-width:25px;height:26px;min-height:26px;padding:4px}.header-tools button svg{width:16px;height:16px}}
+.header-tools .discord-invite{display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:8px;color:#b9adf5;text-decoration:none}.header-tools .discord-invite svg{width:17px;height:17px;display:block}.header-tools .discord-invite:hover{color:#e5d4ff;background:#b798ff1a}.header-tools .discord-invite:focus-visible{outline:2px solid #bba0ef;outline-offset:3px}@media(max-width:400px){.header-tools .discord-invite{width:25px;height:26px}.header-tools .discord-invite svg{width:16px;height:16px}}
+.user-guide-link{display:inline-flex;align-items:center;gap:5px;color:#c9b6f5;text-decoration:none;font-size:11px;line-height:1.5;border-radius:4px}.user-guide-link:hover{color:#a3e4dc;text-decoration:underline;text-underline-offset:3px}.user-guide-link:focus-visible{outline:2px solid #96e1d9;outline-offset:4px}
+/* Keep the name, version and verified plan together as one identity. */
+.brand-copy{flex-wrap:nowrap;flex:1 0 auto;gap:7px;overflow:visible}
+.brand-mark{flex:none}
+.keep-open-hint{white-space:normal;align-items:flex-start}
+#keepOpenText{min-width:0;overflow-wrap:break-word}
+@media(max-width:460px){
+ .brand-row{gap:6px}
+ .brand-mark{width:26px;height:26px}
+ .brand-copy,.brand-copy h1{gap:4px}
+ .brand-copy h1{font-size:15px}
+ .version-badge{padding:2px 4px;font-size:9px}
+ .header-tools{gap:1px}
+ .header-tools button,.header-tools .discord-invite{width:24px;min-width:24px;height:28px;min-height:28px;padding:4px;box-sizing:border-box}
+ .header-tools button svg,.header-tools .discord-invite svg{width:16px;height:16px}
+}
+@media(max-width:360px){
+ .brand-row{flex-wrap:nowrap;gap:5px}
+ .brand-mark{width:24px;height:24px}
+ .brand-copy,.brand-copy h1{gap:3px}
+ .brand-copy h1{font-size:14px}
+ .version-badge{padding:2px 3px;font-size:8.5px}
+ .header-tools{gap:0}
+ .header-tools button,.header-tools .discord-invite{width:20px;min-width:20px;height:26px;min-height:26px;padding:3px}
+ .header-tools button svg,.header-tools .discord-invite svg{width:14px;height:14px}
+}
+
+  .run-tools-row { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;min-width:0;flex-wrap:wrap; }
+  #runCard .run-tools-row .repair-status-line { margin:0;min-width:0;flex:1;display:flex;justify-content:flex-start; }
+  #runCard .run-tools-row .repair-indicator { margin:0;gap:6px;padding:7px 8px;letter-spacing:0; }
+  .max-speed-control { display:inline-flex;align-items:center;gap:8px;box-sizing:border-box;margin:0 0 0 auto;padding:7px 8px;min-height:30px;border:1px solid #b798ff40;border-radius:8px;background:linear-gradient(110deg,#2a2140,#14111f);color:#d9cdf7;font-size:10.5px;font-weight:600;line-height:1.3;cursor:pointer;box-shadow:inset 0 1px 0 #ffffff08,0 2px 8px #00000024; }
+  .max-speed-control strong { font:inherit; }
+  .max-speed-control input[type="checkbox"] { width:28px;height:16px;min-height:16px; }
+  .max-speed-control input[type="checkbox"]::before { width:10px;height:10px; }
+  .max-speed-control input[type="checkbox"]:checked::before { transform:translateX(12px); }
+  .max-speed-control[hidden] { display:none; }
+  /* MCP chip (owner 2026-11-01): opens Settings → MCP; the dot is teal while an AI key is on. */
+  .mcp-chip { cursor:pointer;margin-left:8px;font-family:inherit;align-self:stretch; }
+  .run-tools-row #maxSpeedControl[hidden] + .mcp-chip { margin-left:auto; }
+  .mcp-chip-dot { width:8px;height:8px;border-radius:50%;background:#5b4f6e;box-shadow:0 0 0 2px #00000040; }
+  .mcp-chip[aria-pressed="true"] .mcp-chip-dot { background:#96e1d9;box-shadow:0 0 8px #96e1d9; }
+  .mcp-chip-crown { color:#c6a5f0; }
+  @media(max-width:380px) { #runCard .run-tools-row .repair-light-strip { display:none; } }
+
+.header-account-menu[hidden],.header-account-menu [hidden]{display:none!important}
+#headerSettingsBtn[aria-expanded="true"]::after{display:none}
+.header-account-menu{position:fixed;z-index:1200;top:56px;right:12px;width:180px;max-width:calc(100vw - 24px);padding:4px;border:1px solid #67547c88;border-radius:10px;background:#1c1826;box-shadow:0 10px 30px #0007;color:#eee8f5}
+.header-account-menu button{display:flex;align-items:center;gap:8px;width:100%;min-height:32px;padding:7px 9px;border:0;border-radius:6px;background:transparent;color:inherit;text-align:left;font:500 12px Segoe UI,system-ui,sans-serif;box-shadow:none;cursor:pointer}
+.header-account-menu button span{width:16px;text-align:center;font-size:15px;color:#aea2bd;flex:none}
+.header-account-menu button:hover,.header-account-menu button:focus-visible{background:#b99aff1c;outline:2px solid transparent}
+.header-account-menu button:focus-visible{outline-color:#bda5f0;outline-offset:-2px}
+.header-account-menu button:disabled{opacity:.45;cursor:default}
+.header-account-menu .menu-upgrade,.header-account-menu .menu-upgrade span{color:#bcece3}
+.header-account-menu .menu-logout,.header-account-menu .menu-logout span{color:#f38b9a}
+.header-account-menu .menu-language{display:flex;align-items:center;gap:8px;min-height:32px;padding:4px 9px}
+.header-account-menu .menu-language span{width:16px;text-align:center;font-size:15px;flex:none}
+.header-account-menu .menu-language select{flex:1;min-width:0;height:26px;padding:0 4px;border:1px solid #67547c88;border-radius:6px;background:#241e31;color:inherit;font:500 12px Segoe UI,system-ui,sans-serif}
+.menu-divider{height:1px;margin:3px 7px;background:#ffffff13}
+.header-menu-status{margin:5px 7px;font-size:11px;line-height:1.5;color:#c5b8d2}
+.quick-tour{width:min(420px,calc(100vw - 24px))}.quick-tour .utility-body{min-height:178px}
+.tour-count{color:#a4e6dc;font-size:11px;text-transform:uppercase;letter-spacing:1px}.quick-tour h3{font-size:20px;margin:12px 0}.tour-dots{display:flex;gap:6px;margin-top:22px}.tour-dots span{height:5px;width:20px;border-radius:3px;background:#76638944}.tour-dots span.active{background:#bda5f0}.tour-actions{display:flex;justify-content:space-between;gap:12px;margin-top:18px}.tour-actions button{min-width:80px}
+</style>
+<link rel="stylesheet" href="flow-buddy.css" />
+<script src="i18n/th.js"></script>
+<script src="i18n/i18n.js"></script>
+  <link rel="stylesheet" href="motion/navigation.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-row"><img class="brand-mark" src="logo.png" alt="0xtnp Flow Studio logo" /><div class="brand-copy"><h1>0xFlow <span id="versionBadge" class="version-badge" title="Installed version"></span></h1></div><div class="header-tools"><a class="discord-invite" href="https://discord.gg/D2RBEuGg5t" target="_blank" rel="noopener noreferrer" title="Join our Discord community" aria-label="Join our Discord community (opens in a new tab)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.7 5.1a18 18 0 0 0-4.4-1.4l-.6 1.2a16 16 0 0 0-5.4 0l-.6-1.2a18 18 0 0 0-4.4 1.4C1.5 9.3.8 13.4 1.2 17.4a18 18 0 0 0 5.4 2.7l1.1-1.8-1.7-.8.4-.3a13.6 13.6 0 0 0 11.2 0l.4.3-1.7.8 1.1 1.8a18 18 0 0 0 5.4-2.7c.5-4.7-.8-8.8-3.1-12.3ZM8.5 14.8c-1 0-1.7-.9-1.7-2s.7-2 1.7-2 1.7.9 1.7 2-.7 2-1.7 2Zm7 0c-1 0-1.7-.9-1.7-2s.7-2 1.7-2 1.7.9 1.7 2-.7 2-1.7 2Z"/></svg></a><button type="button" id="guideIconBtn" data-tip="User Guide & video tutorial" aria-label="User Guide and video tutorial (opens in a new tab)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.7"/><path d="M12 17.2h.01"/></svg></button><button type="button" id="newsIconBtn" data-tip="What's new" aria-label="What's new"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h8l4 4v14H5V3h2Z"/><path d="M14 3v5h5M8 12h8M8 16h5"/></svg></button><button type="button" id="coffeeIconBtn" data-tip="Buy me a coffee" aria-label="Buy me a coffee (opens the support page)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13v7a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8Z"/><path d="M17 9h1a3 3 0 1 1 0 6h-1M7 3v2M11 2v3M15 3v2"/></svg></button><button type="button" id="headerUpdateBtn" data-tip="Update extension" aria-label="Update extension"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 15v5h16v-5"/></svg></button><button type="button" id="headerSettingsBtn" data-tip="Menu" aria-label="Open account and settings menu" aria-haspopup="menu" aria-expanded="false" aria-controls="headerAccountMenu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 3-.7 2.2-2 .9-2.1-.5-2 3.4 1.5 1.7v2.5L2.2 15l2 3.4 2.1-.5 2 .9L9 21h4l.7-2.2 2-.9 2.1.5 2-3.4-1.5-1.8v-2.5L19.8 9l-2-3.4-2.1.5-2-.9L13 3Z"/><circle cx="11" cy="12" r="3"/></svg></button></div></div>
+    <aside id="communitySupportBanner" class="community-support" aria-label="Support 0xFlow" hidden>
+      <span class="community-support-copy">☕ Keep 0xFlow brewing 💜</span>
+      <a class="community-support-link" href="https://0xflow.app/coffee" target="_blank" rel="noopener noreferrer" aria-label="Donate to support 0xFlow (opens in a new tab)">Donate <span aria-hidden="true">↗</span></a>
+      <button id="communitySupportClose" class="community-support-close" type="button" aria-label="Dismiss donation reminder for today" title="Dismiss for today">×</button>
+    </aside>
+    <div id="updateBanner" class="update-banner" role="status" hidden></div>
+    <p id="keepOpenHint" class="keep-open-hint" role="status"><span aria-hidden="true">✦</span> <span id="keepOpenText">Automate Flow, ChatGPT, Gemini &amp; Grok, or let AI Story make the video.</span></p>
+    <div class="top-tabs" role="tablist" aria-label="Panel tabs">
+      <button id="controlTabBtn" class="top-tab" type="button" role="tab" aria-controls="controlTabPanel" aria-selected="true">Control</button>
+      <button id="settingsTabBtn" class="top-tab" type="button" role="tab" aria-controls="settingsTabPanel" aria-selected="false">Settings</button>
+      <button id="repairTabBtn" class="top-tab" type="button" role="tab" aria-controls="repairTabPanel" aria-selected="false">Auto-Fix</button>
+      <button id="logsTabBtn" class="top-tab" type="button" role="tab" aria-controls="logsTabPanel" aria-selected="false">Debug</button>
+    </div>
+</header>
+  <dialog id="backgroundModeDialog" aria-labelledby="backgroundModeTitle">
+    <h2 id="backgroundModeTitle">Run Flow in the background</h2>
+    <p>Tab sharing may help the <span data-bg-platform>Flow project</span> tab stay responsive when you switch tabs or use another app. This is experimental; keep Chrome and this extension panel open.</p>
+    <ol><li>Click <strong data-bg-choose>Choose Flow tab</strong>.</li><li>Select only your <span data-bg-platform>Flow project</span> tab in Chrome’s <strong>Chrome Tab</strong> list.</li><li>Click <strong>Share</strong>. Choose the correct tab—the extension cannot verify its identity.</li></ol>
+    <p id="backgroundTargetName"></p>
+    <p class="capture-note">The selected tab’s video stream stays inside this extension. It is not recorded or uploaded, and audio is not captured. Stop sharing at any time. Sharing stops when the queue finishes.</p>
+    <div class="row"><button id="cancelBackgroundModeBtn" type="button">Cancel</button><button id="chooseFlowTabBtn" type="button" class="primary">Choose Flow tab</button></div>
+  </dialog>
+  <div id="headerAccountMenu" class="header-account-menu" role="menu" aria-label="Account and settings" hidden>
+    <button type="button" role="menuitem" data-header-action="settings"><span aria-hidden="true">⚙</span>Settings</button>
+    <button type="button" role="menuitem" data-header-action="upgrade" class="menu-upgrade"><span aria-hidden="true">♛</span>Upgrade plan</button>
+    <button type="button" role="menuitem" data-header-action="affiliates" class="menu-upgrade" hidden><span aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="5" r="3"/><circle cx="18" cy="19" r="3"/><path d="m9 10 6-4m-6 8 6 4"/></svg></span>Affiliates</button>
+    <button type="button" role="menuitem" data-header-action="tour"><span aria-hidden="true">↻</span>Quick tour</button>
+    <button type="button" role="menuitem" data-header-action="tutorial"><span aria-hidden="true">▶</span>Watch tutorial</button>
+    <button type="button" role="menuitem" data-header-action="support"><span aria-hidden="true">☏</span>Contact Support</button>
+    <label class="menu-language"><span aria-hidden="true">🌐</span><select data-ox-language aria-label="Language"><option value="auto">Automatic (Chrome language)</option><option value="en">English</option><option value="th">ไทย (Thai)</option><option value="bn">বাংলা (Bangla)</option><option value="vi">Tiếng Việt</option><option value="zh-Hans">简体中文</option><option value="ko">한국어</option><option value="ja">日本語</option><option value="es">Español</option><option value="ro">Română</option></select></label>
+    <div class="menu-divider" role="separator"></div>
+    <button type="button" role="menuitem" data-header-action="logout" class="menu-logout"><span aria-hidden="true">↪</span>Logout</button>
+    <p id="headerMenuStatus" class="header-menu-status" role="status" hidden></p>
+  </div>
+  <dialog id="quickTourDialog" class="utility-dialog quick-tour" aria-labelledby="quickTourTitle">
+    <div class="utility-head"><h2 id="quickTourTitle">Welcome to 0xFlow</h2><button id="quickTourClose" type="button" aria-label="Close quick tour">×</button></div>
+    <div class="utility-body"><p id="quickTourCount" class="tour-count"></p><h3 id="quickTourHeading"></h3><p id="quickTourText"></p><div id="quickTourDots" class="tour-dots" aria-hidden="true"></div></div>
+    <div class="tour-actions"><button id="quickTourBack" type="button">Back</button><button id="quickTourNext" type="button" class="primary">Next</button></div>
+  </dialog>
+  <dialog id="headerUtilityDialog" class="utility-dialog"><div class="utility-head"><h2 id="utilityTitle"></h2><button id="utilityClose" type="button" aria-label="Close dialog">×</button></div><div id="utilityBody" class="utility-body"></div></dialog>
+  <video id="backgroundCaptureVideo" muted playsinline aria-hidden="true" style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;left:-10px"></video>
+
+  <main id="controlTabPanel" role="tabpanel" aria-labelledby="controlTabBtn">
+    <!-- Video tutorial, shown once until clicked or closed (tutorial-card.js). -->
+    <div id="tutorialCard" class="tutorial-card" hidden><button id="tutorialCardOpen" class="tutorial-open" type="button"><span class="tutorial-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg></span><span>New to 0xFlow? Watch the full tutorial<small>Opens the video on YouTube</small></span></button><button id="tutorialCardClose" class="tutorial-close" type="button" aria-label="Hide the tutorial card">×</button></div>
+    <!-- Free plan counter at the top of Control (owner 2026-10-27: people did not see it under the Run buttons). -->
+    <div id="usageLine" class="usage-card" hidden>
+      <div class="usage-head"><span class="usage-plan" id="usagePlan"><svg id="usageProIcon" class="usage-pro-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><path d="m2 4 5 7 5-8 5 8 5-7-3 14H5L2 4Z"/><path d="M5 22h14"/></svg><span class="usage-plan-label">⚡ Free plan</span></span><span class="usage-count" id="usageLineText"></span><div id="usageAccount" class="usage-account"></div><button id="usageRefreshBtn" class="usage-icon usage-refresh" type="button" title="Refresh plan" aria-label="Refresh plan"><i aria-hidden="true">↻</i></button></div>
+      <div class="usage-meter" aria-hidden="true"><span id="usageMeterFill"></span></div>
+      <div class="usage-body"><button id="usageUpgradeBtn" class="usage-upgrade" type="button" title="No daily limit in the extension · uses your own Flow, ChatGPT, Gemini and Grok accounts" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 4 5 7 5-8 5 8 5-7-3 14H5L2 4Z"/><path d="M5 22h14"/></svg><span>Upgrade to Pro - $4/month</span></button></div>
+      <small id="usageLineStatus" role="status"></small>
+    </div>
+    <section class="card" aria-label="Platform and mode">
+      <div class="field platform-field"><span id="platformLabel" class="platform-label">Platform</span><select id="platformSelect" hidden aria-hidden="true" tabindex="-1"><option value="flow">Google Flow</option><option value="chatgpt">ChatGPT</option><option value="gemini">Gemini</option><option value="grok">Grok</option><option value="muse">Muse</option><option value="higgsfield">Higgsfield</option><option value="vids">Google Vids</option></select><div id="platformTabs" class="platform-tabs" role="radiogroup" aria-labelledby="platformLabel"><button type="button" role="radio" class="platform-tab" data-platform="flow" aria-checked="false" tabindex="-1" title="Google Flow · images &amp; video"><img src="assets/platforms/flow.png" alt="" width="16" height="16" /><span>Flow</span></button><button type="button" role="radio" class="platform-tab" data-platform="chatgpt" aria-checked="false" tabindex="-1" title="ChatGPT · images"><img src="assets/platforms/chatgpt.png" alt="" width="16" height="16" /><span>ChatGPT</span></button><button type="button" role="radio" class="platform-tab" data-platform="gemini" aria-checked="false" tabindex="-1" title="Gemini · images &amp; video (Veo)"><img src="assets/platforms/gemini.png" alt="" width="16" height="16" /><span>Gemini</span></button><button type="button" role="radio" class="platform-tab" data-platform="grok" aria-checked="false" tabindex="-1" title="Grok Imagine · images &amp; video"><img src="assets/platforms/grok.png" alt="" width="16" height="16" /><span>Grok</span></button><button type="button" role="radio" class="platform-tab" data-platform="muse" aria-checked="false" tabindex="-1" title="Muse · images &amp; video"><img src="assets/platforms/muse.svg" alt="" width="16" height="16" /><span>Muse</span></button><button type="button" role="radio" class="platform-tab" data-platform="higgsfield" aria-checked="false" tabindex="-1" title="Higgsfield · images &amp; video"><img src="assets/platforms/higgsfield.png" alt="" width="16" height="16" /><span>Higgsfield</span></button><button type="button" role="radio" class="platform-tab" data-platform="vids" aria-checked="false" tabindex="-1" title="Google Vids · images &amp; video"><img src="assets/platforms/vids.svg" alt="" width="16" height="16" /><span>Google Vids</span></button></div><p id="platformNotice" class="muted"></p></div>
+      <section id="vidsEnginePanel" class="hidden" aria-label="Google Vids engine">
+        <p id="vidsConnectionStatus" class="muted" aria-live="polite">Select Google Vids to open its home page. Start generation opens a blank video.</p>
+      </section>
+      <div class="mode-grid" role="group" aria-label="Generation mode">
+        <button class="mode-btn" data-mode="text-to-video" aria-pressed="false">Text to Video</button>
+        <button class="mode-btn" data-mode="frame-to-video" aria-pressed="false">Frame to Video</button>
+        <button class="mode-btn" data-mode="ingredients-to-video" aria-pressed="false">Ingredients to Video</button>
+        <button class="mode-btn" data-mode="text-to-image" aria-pressed="false">Text to Image</button>
+        <button class="mode-btn" data-mode="image-to-image" aria-pressed="false">Image to Image</button>
+        <button class="mode-btn" data-mode="agent" aria-pressed="false">Agent Automation</button>
+      </div>
+    </section>
+
+    <section id="runSettingsCard" class="card" aria-labelledby="runSettingsHeading">
+      <div class="card-head"><h2 id="runSettingsHeading">Settings</h2></div>
+      <div class="run-settings-grid">
+        <div class="field"><label for="concurrentPrompts">Concurrent Prompts</label>
+          <select id="concurrentPrompts"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+        </div>
+        <div class="field grow"><label for="delayMin">Delay between sends (seconds)</label>
+          <div class="delay-range"><input id="delayMin" type="number" min="0" max="3600" /> <span class="muted">to</span> <input id="delayMax" type="number" min="0" max="3600" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="imagesCard" class="card" aria-labelledby="imagesHeading">
+      <div class="card-head"><h2 id="imagesHeading">Images</h2><span id="imageCount" class="muted">0 uploaded</span><select id="imageOrder" aria-label="Image order"><option value="custom">Custom Order</option><option value="name-asc">Name A–Z</option><option value="name-desc">Name Z–A</option><option value="newest">Newest</option><option value="oldest">Oldest</option></select></div>
+      <p id="imageOrderHint" class="muted">Drag images or use the arrows to set their order. Frame selection follows this sequence.</p>
+      <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Upload images">
+        <strong>Drop images here or click to browse</strong>
+        <span>PNG / JPG / WEBP &mdash; used as start frames, ingredients, or image sources</span>
+      </div>
+      <input id="imageFileInput" type="file" accept="image/*" multiple class="hidden" />
+      <div id="thumbs" class="thumbs"></div>
+      <div class="row" style="margin-top:8px">
+        <div id="imageProcessingControls" class="field grow hidden" hidden>
+          <label for="imageProcessing">Image Processing Option</label>
+          <select id="imageProcessing">
+            <option value="start-frame">Use Start frame only for each prompt</option>
+            <option value="all-each">Use all images with each prompt</option>
+            <option value="first-only">Use first image for every prompt</option>
+            <option value="pair">Pair one image per prompt in order (no reuse)</option>
+          </select>
+        </div>
+        <button id="clearImagesBtn" class="ghost small" style="align-self:flex-end">Clear all</button>
+      </div>
+      <div class="muted hidden" hidden id="imageProcessingHint" style="margin-top:5px;font-size:10.5px"></div>
+    </section>
+
+    <section class="card" aria-labelledby="promptsHeading">
+      <div class="card-head"><h2 id="promptsHeading">Prompts</h2><span id="promptCount" class="muted">0 loaded</span></div>
+      <div class="toolbar">
+        <button id="uploadTxtBtn">Upload .txt file</button>
+        <button id="uploadSheetBtn">Upload .xlsx/.csv</button>
+        <input id="txtFileInput" type="file" accept=".txt,text/plain" class="hidden" />
+        <input id="sheetFileInput" type="file" accept=".csv,.xlsx,.tsv,text/csv" class="hidden" />
+      </div>
+      <textarea id="promptText" placeholder="Separate prompts with a blank line. Line breaks stay within each prompt.&#10;Example: A neon-lit Manila street at night, rain reflections, cinematic 9:16"></textarea>
+      <div id="manualSheetsRow" class="reference-match hidden">
+        <label class="sheet-toggle"><input id="manualSheets" type="checkbox" aria-describedby="manualSheetsAllowance" disabled /><span class="sheet-title"><strong>Storyboard sheets<span id="manualSheetsPro" class="pro-chip" role="button" tabindex="0" title="Unlimited with Pro" hidden>PRO</span></strong><small>4 prompts in 1 image</small></span></label>
+        <small id="manualSheetsAllowance" class="muted" role="status">Connect to check your storyboard sheet allowance.</small>
+        <div class="field sheet-upscale"><label for="sheetUpscale">Upscale quality</label><select id="sheetUpscale"><option value="off">Off</option><option value="natural">Natural</option><option value="balanced">Balanced (default)</option><option value="sharp">Sharp</option></select></div>
+      </div>
+      <div id="ingredientMatchingCard" class="reference-match">
+        <label><input id="autoMatchIngredientImages" type="checkbox" aria-describedby="referenceMatchHelp" checked /> <strong>Automatically match reference images</strong></label>
+        <div id="referenceMatchHelp" class="reference-match-help">
+          <p>Mention an image’s filename in your prompt—such as <code>@char_1</code>, <code>@loc_1</code>, or <code>Maria</code> for <code>Maria.png</code>—to attach it automatically.</p>
+          <p>No filenames? Image to Image uses all uploads; Ingredients to Video follows your Image Processing setting.</p>
+        </div>
+      </div>
+      <div class="row prompt-status-row" style="margin-top:8px"><button id="applyPromptsBtn" class="hidden" type="button">Apply prompts to queue</button><span id="applyStatus" class="muted" aria-live="polite"></span></div>
+    </section>
+
+    <section class="card" aria-labelledby="promptModesHeading">
+      <div class="card-head"><h2 id="promptModesHeading">Video Mode per Prompt</h2></div>
+      <details id="promptCardsDisclosure"><summary class="queue-summary">Duration &amp; reference cards <span id="promptCardsTotal" class="prompt-total">0 prompts</span></summary><div class="row pager"><button id="promptPrev" class="small ghost">← Previous</button><span id="promptPageInfo" class="muted"></span><button id="promptNext" class="small ghost">Next →</button></div></details><div id="promptModes"></div>
+      <p class="muted">Choose a duration for each prompt. Concat combines it with the next prompt as timed scenes in one video (maximum 10s total).</p>
+      <div class="output-cards">
+        <div class="field output-card"><label for="flowOutputCount"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg>Outputs per Prompt</label><select id="flowOutputCount"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></div>
+        <div class="field output-card"><label for="downloadSubfolder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v8.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5Z"/></svg>Save to folder</label><input id="downloadSubfolder" type="text" placeholder="Flow Automation" /></div>
+      </div>
+      <label class="switch-row" for="renameOutputs"><span class="switch-copy"><span>Auto change file name</span><small>On: <code>001_prompt_words.mp4</code> · Off: the platform's own file name</small></span><input id="renameOutputs" type="checkbox" role="switch" checked /><span class="switch-track" aria-hidden="true"></span></label>
+      <label class="switch-row" for="referenceImageNames"><span class="switch-copy"><span>Save images using reference names</span><small><code>GAB, description</code> → <code>GAB.png</code></small></span><input id="referenceImageNames" type="checkbox" role="switch" /><span class="switch-track" aria-hidden="true"></span></label>
+    </section>
+    <section class="card" id="queueCard" aria-labelledby="queueHeading">
+      <div class="card-head"><h2 id="queueHeading">Queue</h2><span id="visibleCount" class="muted"></span></div>
+      <div class="row pager"><select id="queueFilter" aria-label="Filter queue"><option value="all">All prompts</option><option value="running">Active</option><option value="pending">Pending</option><option value="error">Errors</option><option value="done">Completed</option></select><button id="queuePrev" class="small ghost">←</button><span id="queuePageInfo" class="muted"></span><button id="queueNext" class="small ghost">→</button></div><details open id="queueWrap"><summary class="queue-summary">Prompt queue <span id="queueGroupSummary" class="muted"></span></summary><div id="queueBody"></div></details>
+    </section>
+
+    <section class="card" id="runCard" aria-labelledby="runHeading">
+      <div class="card-head"><h2 id="runHeading">Run</h2><span id="runState" class="status-warn">idle</span></div>
+      <div class="progress" aria-label="Queue progress"><div id="progressBar"></div></div>
+      <div class="stats"><span id="progressText">0%</span><span id="queueStatus">No queue</span></div>
+      <div class="toolbar run-actions">
+        <button id="startBtn" class="primary">Start</button>
+        <button id="stopBtn" class="danger" disabled>Stop</button>
+        <button id="retryErrorsBtn" disabled>Retry errors</button>
+      </div>
+      <div id="preflightBox" class="preflight" role="alert" hidden></div>
+      <div class="run-secondary">
+      <button id="backgroundModeBtn" class="background-mode-btn" type="button" aria-pressed="false" aria-label="Enable Background Mode"><span class="background-copy"><strong>✦ Background Mode</strong><small>Keep the queue running while you work.</small></span><span class="background-state" aria-hidden="true"></span><span class="background-switch" aria-hidden="true"></span></button>
+      <div id="backgroundModeStatus" role="status"></div>
+      <div class="run-tools-row">
+        <div id="repairStatusBar" class="repair-status-line"></div>
+        <label id="maxSpeedControl" class="max-speed-control" for="flowParallel" title="Flow only: On runs 2 prompts at once; Off runs 1 at a time. Last-frame chaining always runs in order."><strong>Max Speed</strong><input id="flowParallel" type="checkbox" role="switch" /></label>
+        <button id="mcpChip" class="max-speed-control mcp-chip" type="button" aria-pressed="false" title="AI assistant (MCP): connect Claude, Codex or another AI app. Opens Settings → MCP."><span class="mcp-chip-dot" aria-hidden="true"></span><strong>MCP</strong><span class="mcp-chip-crown" aria-hidden="true">♛</span></button>
+      </div>
+      </div>
+    </section>
+  </main>
+
+  <section id="settingsTabPanel" class="hidden" role="tabpanel" aria-labelledby="settingsTabBtn">
+    <section class="card">
+      <div class="settings-section">
+        <h3 id="engineSettingsHeading">Flow</h3>
+        <div class="settings-grid">
+          
+          <div class="field"><label for="flowModel">Model</label><select id="flowModel"><option value="">Flow default (keep current model)</option><option value="Omni 1.1 Flash" selected>Omni 1.1 Flash · leaving Dec 5</option><option>Omni 1.2 Flash</option><option>Veo 3.1 - Lite</option><option>Veo 3.1 - Lite [Lower Priority]</option><option value="Veo 3.1 - Fast">Veo 3.1 - Fast · leaving Dec 5</option><option value="Veo 3.1 - Quality">Veo 3.1 - Quality · leaving Dec 5</option></select></div>
+          <div class="field hidden"><label for="flowImageModel">Image Model</label><select id="flowImageModel"><option value="">Flow default (keep current image model)</option><option>Nano Banana Pro</option><option>Nano Banana 2</option><option>Nano Banana 2 Lite</option></select></div>
+          <div class="field"><label for="aspectRatio">Aspect ratio</label><select id="aspectRatio"><option value="portrait">Portrait (9:16)</option><option value="landscape">Landscape (16:9)</option><option value="square">Square (1:1)</option></select></div>
+          <div class="field hidden"><label for="vidsVideoModel">Video model</label><select id="vidsVideoModel"><option value="Omni">Omni</option></select></div>
+          <div class="field hidden"><label for="vidsAspectRatio">Aspect ratio</label><select id="vidsAspectRatio"><option value="landscape">Landscape (16:9)</option><option value="portrait">Portrait (9:16)</option></select></div>
+          <div class="field hidden"><label for="vidsResolution">Video generation resolution</label><select id="vidsResolution"><option value="720p">720p</option><option value="1080p">1080p</option></select></div>
+          <div class="field hidden"><label for="vidsDurationSeconds">Video duration (seconds)</label><input id="vidsDurationSeconds" type="number" min="3" max="15" step="1" required /></div>
+          <div class="field hidden"><label for="geminiModel">Gemini model</label><select id="geminiModel"><option value="">Gemini default (keep current model)</option><option value="flash-lite">Flash-Lite · fastest</option><option value="flash">Flash · all-around</option><option value="pro">Pro · advanced reasoning</option><option value="argon">Argon · complex tasks</option></select><span class="muted">Unavailable models are skipped.</span></div>
+          <div class="field hidden"><label for="geminiThinking">Gemini thinking</label><select id="geminiThinking"><option value="">Gemini default (keep current level)</option><option value="low">Low · quick and efficient</option><option value="medium">Medium · balanced depth</option><option value="high">High · extra thorough</option></select></div>
+          <div class="field hidden"><label for="higgsVideoModel">Higgsfield video model</label><select id="higgsVideoModel"><option value="">Keep the model chosen on Higgsfield</option><option value="seedance_2_5">Seedance 2.5</option><option value="seedance_2_5_draft">Seedance 2.5 Draft · 480p, cheapest</option></select><span class="muted">For other models, choose them on higgsfield.ai.</span></div>
+          <div class="field hidden"><label for="higgsImageModel">Higgsfield image model</label><select id="higgsImageModel"><option value="">Keep the model chosen on Higgsfield</option><option value="gpt_image_2">GPT Image 2</option></select></div>
+          <div class="field hidden"><label for="higgsDuration">Higgsfield video length</label><select id="higgsDuration"><option value="0">Keep the length set on Higgsfield</option><option value="4">4s</option><option value="5">5s</option><option value="6">6s</option><option value="8">8s</option><option value="10">10s</option><option value="12">12s</option><option value="15">15s</option></select></div>
+          <div class="field hidden"><label for="higgsMaxCredits">Higgsfield credit limit per prompt</label><input id="higgsMaxCredits" type="number" min="0" max="1000" step="0.5" /><span class="muted">Costlier prompts stop the queue. 0 = no limit.</span></div>
+          <div class="field"><label for="grokImageQuality">Grok image quality</label><select id="grokImageQuality"><option value="speed">Speed (default)</option><option value="quality">Quality 2.0</option></select><span class="muted">Set before pictures are attached.</span></div>
+          <div class="field"><label for="flowDurationSeconds">Video duration</label><select id="flowDurationSeconds"><option value="3" hidden disabled>3s</option><option value="4">4s</option><option value="5" hidden disabled>5s</option><option value="6">6s</option><option value="7" hidden disabled>7s</option><option value="8">8s</option><option value="9" hidden disabled>9s</option><option value="10">10s</option><option value="11" hidden disabled>11s</option><option value="12" hidden disabled>12s</option><option value="13" hidden disabled>13s</option><option value="14" hidden disabled>14s</option><option value="15" hidden disabled>15s</option></select><span id="flowDurationHint" class="muted" hidden>Veo is always 8s. Use Omni 1.2 Flash for other lengths.</span></div>
+          <div class="field"><label for="videoGenerationResolution">Video generation resolution</label><select id="videoGenerationResolution"><option value="default">Flow default</option><option value="360p">360p</option><option value="480p">480p</option><option value="720p">720p</option><option value="1080p">1080p</option><option value="2k">2K</option><option value="4k">4K</option></select><span id="genResHint" class="muted">Choose 1080p below to upscale on download. 360p is a cheap draft (about 1/3 of the credits).</span></div>
+          <div class="field"><label for="videoResolution">Video download resolution</label><select id="videoResolution"><option value="default">Default</option><option value="360p">360p</option><option value="720p">720p</option><option value="1080p">1080p</option><option value="2k">2K</option><option value="4k">4K</option><option value="none">No download</option></select><span class="muted">No download: nothing is saved.</span></div>
+        </div>
+        <div id="chainFrameRow" class="row" style="margin-top:12px"><label class="check-setting"><input id="chainLastFrame" type="checkbox" /> Use the last video frame as the next prompt's start frame</label></div>
+      </div>
+      <div class="settings-section">
+        <h3>Output</h3>
+        <div class="settings-grid" style="margin-top:8px">
+          <div class="field"><label for="imageDownload">Image download</label><select id="imageDownload"><option value="save">Save image</option><option value="none">No download</option></select><span class="muted">No download: nothing is saved.</span></div><div class="field"><label for="saveImages">Also save prompt text (.txt)</label><select id="savePromptCopy"><option value="no">No</option><option value="yes">Yes</option></select></div>
+        </div>
+      </div>
+      <div class="settings-section">
+        <h3>Reliability</h3>
+        <div class="settings-grid">
+          <div class="field"><label for="maxWaitMinutes">Generation timeout (minutes)</label><input id="maxWaitMinutes" type="number" min="3" max="60" /></div>
+          <div class="field"><label for="maxAttempts">Maximum attempts</label><input id="maxAttempts" type="number" min="2" max="10" /><p class="muted">Tries per flagged ChatGPT prompt, including the first.</p></div>
+          <div class="field"><label for="retryDelaySeconds">Retry delay (seconds)</label><input id="retryDelaySeconds" type="number" min="5" max="600" /></div>
+          <div class="field"><label for="afterResultMin">Wait after each result (seconds)</label><div class="delay-range"><input id="afterResultMin" type="number" min="0" max="3600" /> <span class="muted">to</span> <input id="afterResultMax" type="number" min="0" max="3600" /></div><p class="muted">A random pause after each result. 0 = off.</p></div>
+          <div class="field"><label for="flowPace">Gentle pace (Flow)</label><select id="flowPace"><option value="off">Off · no pauses</option><option value="normal">Normal · about 5 s per prompt</option><option value="slow">Slow · about 10 s per prompt</option></select><p class="muted">Short random pauses, so Flow does not see a fixed rhythm.</p></div>
+          <div class="field"><label for="uploadSettleSeconds">Upload stability wait (seconds)</label><input id="uploadSettleSeconds" type="number" min="3" max="120" /></div>
+        </div>
+      </div>
+      <div class="settings-section">
+        <details class="advanced-settings"><summary>Advanced · Import structured project</summary>
+          <p class="muted">Load prompts from a manifest or a 02_video_prompts folder. Results go to 03_video_outputs.</p>
+          <div class="row"><button id="loadProjectBtn" type="button">Import project folder</button><button id="clearProjectBtn" class="ghost" type="button">Clear project data</button></div>
+          <div id="projectImportStatus" class="muted" style="margin-top:9px">No structured project loaded.</div>
+        </details>
+      </div>
+      <div class="settings-section" id="buddySettings">
+        <h3>Flow Buddy</h3>
+        <p class="muted" style="margin:4px 0 8px">The corner helper shows what the queue is doing. Saves automatically.</p>
+        <label class="check-setting"><input id="buddyEnabled" type="checkbox" checked /> Show Flow Buddy</label>
+        <label class="check-setting" style="margin-top:6px"><input id="buddyBubbles" type="checkbox" checked /> Show speech bubbles</label>
+        <label class="check-setting" style="margin-top:6px"><input id="buddyRepairReminder" type="checkbox" checked /> Remind me when Auto-Fix is off</label>
+        <div class="settings-grid" style="margin-top:8px">
+          <div class="field"><label for="buddyMotion">Animation</label><select id="buddyMotion"><option value="normal">Normal</option><option value="low">Low</option><option value="off">Off</option></select></div>
+          <div class="field"><label for="buddyFrequency">Messages</label><select id="buddyFrequency"><option value="all">All updates</option><option value="important">Important only</option></select></div>
+        </div>
+        <span id="buddySaveStatus" class="muted" role="status"></span>
+      </div>
+      <div class="row" style="margin-top:10px"><button id="saveSettingsBtn" class="primary">Save settings</button><button id="resetSettingsBtn" class="ghost">Defaults</button><span id="saveStatus" class="muted"></span></div>
+      <div class="row" style="margin-top:8px"><button id="checkUpdateBtn" class="ghost" type="button">Check for updates</button><span id="updateCheckStatus" class="muted"></span></div>
+    </section>
+  </section>
+
+  <section id="repairTabPanel" class="hidden" role="tabpanel" aria-labelledby="repairTabBtn">
+    <section class="card repair-panel">
+      <h2>Auto-Fix · automatic prompt repair</h2>
+      <p class="muted">Revises refused prompts, checks references and timing, then retries generation.</p>
+      <div class="repair-connect">
+        <div class="row"><button id="connectCloudRepairBtn" type="button" class="primary">Connect cloud repair</button><button id="disconnectCloudRepairBtn" type="button">Disconnect</button><button id="refreshCloudAllowanceBtn" type="button">Check allowance</button></div>
+        <p id="cloudRepairAllowance" class="muted" role="status">No login needed. Daily allowance per installation.</p>
+      </div>
+      <label class="check-setting repair-switch"><input id="repairEnabled" type="checkbox"> Turn on Auto-Fix</label>
+      <p id="repairModeDescription" class="muted">Sends prompt text, platform warnings and repair history to the repair server and its AI provider. Images and videos stay on the platform.</p>
+      <div class="field repair-limit"><label for="repairMaxRounds">Repair limit per prompt</label><select id="repairMaxRounds"><option value="1">1 round</option><option value="2">2 rounds</option><option value="3">3 rounds</option><option value="4">4 rounds</option><option value="5">5 rounds</option><option value="6">6 rounds</option><option value="7">7 rounds</option><option value="8">8 rounds</option><option value="9">9 rounds</option><option value="10" selected>10 rounds (default)</option></select><p class="muted">Stops when the platform accepts or reaches this limit. Some prompts or images need manual edits.</p></div>
+      <div class="row repair-actions"><button id="saveRepairBtn" class="primary">Save preferences</button><button id="testRepairBtn" type="button">Test connection</button></div>
+      <p id="repairStatus" class="muted" role="status"></p>
+      <p id="repairConnection" class="muted" role="status"></p>
+      <details class="advanced-settings">
+        <summary>Advanced settings</summary>
+        <p class="muted">Optional: private testing or a custom repair server.</p>
+        <p id="cloudRepairMemory" class="muted" role="status" hidden></p>
+        <div class="field"><label for="repairTransport">Repair engine</label><select id="repairTransport"><option value="remote">VPS server</option><option value="local">Local companion (optional)</option></select></div>
+        <div class="field" style="margin-top:8px"><label for="remoteRepairUrl">VPS service URL</label><input id="remoteRepairUrl" type="url" placeholder="http://127.0.0.1:8787" /></div>
+        <div class="field" style="margin-top:8px"><label for="remoteRepairToken">VPS access token</label><input id="remoteRepairToken" type="password" autocomplete="off" /></div>
+        <div class="row" style="margin-top:8px"><button id="importRemoteRepairBtn" type="button">Import private test connection</button><input id="importRemoteRepairFile" type="file" accept=".json" hidden /></div>
+        <p class="muted">Connection changes take effect after you save preferences.</p>
+      </details>
+    </section>
+
+  </section>
+
+  <section id="logsTabPanel" class="hidden" role="tabpanel" aria-labelledby="logsTabBtn">
+    <section class="card">
+      <div class="card-head"><h2>Debug logs</h2><div class="toolbar" style="margin:0;flex-wrap:wrap"><button id="copyLogBtn" class="small">Copy</button><button id="exportLogBtn" class="small">Export</button><button id="clearLogBtn" class="small ghost">Clear</button><button id="sendSupportBtn" class="small">Send to support</button></div></div>
+      <div id="log" role="log" aria-live="polite"></div>
+    </section>
+  </section>
+
+  <dialog id="supportReportDialog" aria-labelledby="supportReportHeading" style="width:min(600px,calc(100% - 24px));max-height:90vh;overflow:auto;background:var(--panel,#171323);color:var(--text,#eee);border:1px solid #726183;border-radius:14px;padding:12px 14px;box-sizing:border-box">
+    <h2 id="supportReportHeading" style="margin:0 0 4px;font-size:16px">Send to support</h2>
+    <label for="supportReportNote" style="font-size:12px">What went wrong? <span class="muted">(optional)</span></label>
+    <textarea id="supportReportNote" maxlength="500" rows="2" style="width:100%;box-sizing:border-box;margin:4px 0 6px;resize:vertical"></textarea>
+    <p class="muted" style="margin:0 0 4px;font-size:11px">Below is exactly what Send shares: settings and the last 300 log lines, cleaned. Kept 30 days.</p>
+    <pre id="supportReportPreview" tabindex="0" aria-label="Cleaned report preview" style="white-space:pre-wrap;overflow-wrap:anywhere;max-height:120px;overflow:auto;font-size:10px;margin:0 0 8px;padding:6px;border:1px solid #3a3148;border-radius:8px"></pre>
+    <p id="supportReportStatus" role="status" aria-live="polite" style="margin:0 0 6px;font-size:12px"></p>
+    <ul id="supportReportChanges" style="margin:0 0 6px;padding-left:18px;font-size:12px"></ul>
+    <div class="toolbar" style="position:sticky;bottom:-12px;margin:0 -14px -12px;padding:8px 14px;background:var(--panel,#171323);border-top:1px solid #3a3148"><button id="supportReportSend" type="button">Send</button><button id="supportReportApply" type="button" hidden>Apply fix</button><button id="supportReportCancel" type="button" class="ghost">Close</button></div>
+  </dialog>
+  <footer><span id="versionLabel">v1.10.6</span></footer>
+  <script src="vendor/xlsx.full.min.js"></script>
+  <script src="lib/parsers.js"></script>
+  <script src="lib/image-order.js"></script>
+  <script src="lib/faceless-builder.js"></script>
+  <script src="lib/queue-reasons.js"></script>
+  <script src="story-shape.js"></script>
+  <script src="control.js"></script>
+  <script src="motion-entry.js"></script>
+  <script src="faceless-builder-ui.js"></script>
+  <script src="story-regenerate.js"></script>
+  <script src="frame-readiness.js"></script>
+  <script src="chatgpt-engine.js"></script>
+  <script src="gemini-engine.js"></script>
+  <script src="video-reverse.js"></script>
+  <script src="grok-engine.js"></script>
+  <script src="muse-engine.js"></script>
+  <script src="higgsfield-engine.js"></script>
+  <script src="google-vids-engine.js"></script>
+  <script src="run-report.js"></script>
+  <script src="background-mode.js"></script>
+  <script src="usage-limit.js"></script>
+  <script src="manual-account-switch.js"></script>
+  <script src="gemini-account-switch.js"></script>
+  <script src="flow-status-report.js"></script>
+  <script src="flow-mcp-bridge.js"></script>
+  <script src="lib/support-report.js"></script>
+  <script src="support-report-panel.js"></script>
+  <script src="project-import.js"></script>
+  <script src="remote-repair.js"></script>
+<script src="cloud-access.js"></script>
+<script src="google-signin.js"></script>
+<script src="memory-client.js"></script>
+  <script src="repair-client.js"></script>
+  <script src="decorations.js"></script>
+  <script src="flow-buddy.js"></script>
+  <script src="update-notice.js"></script>
+  <script src="tutorial-card.js"></script>
+  <script src="mobile-worker-panel.js"></script>
+ 
+ 
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

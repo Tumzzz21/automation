@@ -1,0 +1,5 @@
+Mediabunny 1.61.6 (unmodified browser bundle)
+Copyright (c) Vanilagy and contributors. MPL-2.0; see mediabunny-LICENSE.txt.
+Source for this exact release: https://www.npmjs.com/package/mediabunny/v/1.61.6
+Repository: https://github.com/Vanilagy/mediabunny
+Local browser media processing only. No remote scripts, accounts, or uploads.

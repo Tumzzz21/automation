@@ -1,0 +1,1615 @@
+{
+  "schemaVersion": 1,
+  "skillSnapshot": "1.13.34",
+  "templates": [
+    {
+      "id": "tagalog-drama",
+      "version": 3,
+      "title": "Tagalog Drama",
+      "answers": {
+        "niche": "34",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "partsTotal": "1",
+        "presetContext": "Original fictional adult Filipino teleserye using the v23 dialogue-led Four-Shot Drama Pattern. No narrator unless requested."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/tagalog-drama.md",
+      "preview": "assets/faceless-previews/tagalog-drama.webp"
+    },
+    {
+      "id": "ai-drama",
+      "version": 2,
+      "title": "AI Drama",
+      "answers": {
+        "niche": "58",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "partsTotal": "1",
+        "presetContext": "Original fictional adult primetime family drama set in the story country (storyCulture), using the v23 dialogue-led Four-Shot Drama Pattern. No narrator unless requested.",
+        "dramaCountry": "Auto (match the language)"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/ai-drama.md",
+      "preview": "assets/faceless-previews/ai-drama.webp"
+    },
+    {
+      "id": "anime-drama",
+      "version": 2,
+      "title": "Anime Drama",
+      "answers": {
+        "niche": "61",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Cinematic story",
+        "style": "Anime",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "partsTotal": "1",
+        "presetContext": "Original fictional drama drawn as a warm golden 2D anime storybook film (animeLook), set in the story country (storyCulture): an everyday family drama or a local folk-tale moral drama where greed is punished and kindness rewarded, using the v23 dialogue-led Four-Shot Drama Pattern. No narrator unless requested.",
+        "dramaCountry": "Auto (match the language)",
+        "animeStory": "Auto"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/anime-drama.md",
+      "preview": "assets/faceless-previews/anime-drama.webp"
+    },
+    {
+      "id": "paldo-si-boss",
+      "version": 2,
+      "title": "Paldo Si Boss",
+      "answers": {
+        "niche": "35",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "2",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "imageWorkflow": "Reference images first",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "presetContext": "Short original adult Filipino green-joke banter. Exactly one woman25+ and one man25+, one setting, natural ambiguous Tagalog exchange and exaggerated reaction payoff. No narrator."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/paldo-si-boss.md",
+      "preview": "assets/faceless-previews/paldo-si-boss.webp"
+    },
+    {
+      "id": "animal-rescue",
+      "version": 2,
+      "title": "Animal Rescue",
+      "answers": {
+        "niche": "13",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "An original compassionate animal-rescue story, non-graphic, with a clear rescue action and a hopeful ending. Do not present fictional scenes as real evidence."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/story-mini-movie.md",
+      "preview": "assets/faceless-previews/animal-rescue.webp"
+    },
+    {
+      "id": "toddler-comedy",
+      "version": 2,
+      "title": "Toddler Comedy",
+      "answers": {
+        "niche": "13",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Stylized 3D",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "An original wholesome, playful toddler comedy with expressive fictional stylized 3D characters and a small everyday misunderstanding. Keep all characters and scenes child-safe."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/story-mini-movie.md",
+      "preview": "assets/faceless-previews/toddler-comedy.webp"
+    },
+    {
+      "id": "motivational-quote",
+      "version": 2,
+      "title": "Motivational Quote",
+      "answers": {
+        "niche": "31",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "One original recurring host delivers a relatable motivational saying, alternating with concrete cinematic inserts that show its meaning. Ask the user for the recurring character; do not invent that missing setup answer."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/motivational-quotes-consistent-character-host.md",
+      "preview": "assets/faceless-previews/motivational-quote.webp"
+    },
+    {
+      "id": "niche-001",
+      "version": 2,
+      "title": "Filipino food / hands-only cooking",
+      "answers": {
+        "niche": "1",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Hands-only process",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/filipino-food-hands-only-cooking.md",
+      "preview": "assets/faceless-previews/niche-001.webp"
+    },
+    {
+      "id": "niche-002",
+      "version": 2,
+      "title": "Cooking / food",
+      "answers": {
+        "niche": "2",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Hands-only process",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/cooking-food.md",
+      "preview": "assets/faceless-previews/niche-002.webp"
+    },
+    {
+      "id": "niche-003",
+      "version": 2,
+      "title": "Real estate construction / contractor social content",
+      "answers": {
+        "niche": "3",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/real-estate-construction-contractor.md",
+      "preview": "assets/faceless-previews/niche-003.webp"
+    },
+    {
+      "id": "niche-004",
+      "version": 2,
+      "title": "Real estate listing / property tour",
+      "answers": {
+        "niche": "4",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/real-estate-listing-property-tour.md",
+      "preview": "assets/faceless-previews/niche-004.webp"
+    },
+    {
+      "id": "niche-005",
+      "version": 2,
+      "title": "Hygiene / health habits",
+      "answers": {
+        "niche": "5",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Hands-only process",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/hygiene-health-habits.md",
+      "preview": "assets/faceless-previews/niche-005.webp"
+    },
+    {
+      "id": "niche-006",
+      "version": 2,
+      "title": "Gardening",
+      "answers": {
+        "niche": "6",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Hands-only process",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/gardening.md",
+      "preview": "assets/faceless-previews/niche-006.webp"
+    },
+    {
+      "id": "niche-007",
+      "version": 2,
+      "title": "Finance / money habits",
+      "answers": {
+        "niche": "7",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/finance-money-habits.md",
+      "preview": "assets/faceless-previews/niche-007.webp"
+    },
+    {
+      "id": "niche-008",
+      "version": 2,
+      "title": "Body science / anatomy",
+      "answers": {
+        "niche": "8",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/body-science-anatomy.md",
+      "preview": "assets/faceless-previews/niche-008.webp"
+    },
+    {
+      "id": "niche-009",
+      "version": 2,
+      "title": "Psychology / self-improvement",
+      "answers": {
+        "niche": "9",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/psychology-self-improvement.md",
+      "preview": "assets/faceless-previews/niche-009.webp"
+    },
+    {
+      "id": "niche-010",
+      "version": 2,
+      "title": "Tech / AI tools",
+      "answers": {
+        "niche": "10",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/tech-ai-tools.md",
+      "preview": "assets/faceless-previews/niche-010.webp"
+    },
+    {
+      "id": "niche-011",
+      "version": 2,
+      "title": "Product / commercial",
+      "answers": {
+        "niche": "11",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/product-commercial.md",
+      "preview": "assets/faceless-previews/niche-011.webp"
+    },
+    {
+      "id": "niche-012",
+      "version": 2,
+      "title": "DIY craft / satisfying process",
+      "answers": {
+        "niche": "12",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Hands-only process",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/diy-craft-satisfying-process.md",
+      "preview": "assets/faceless-previews/niche-012.webp"
+    },
+    {
+      "id": "niche-013",
+      "version": 2,
+      "title": "Story / mini-movie",
+      "answers": {
+        "niche": "13",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/story-mini-movie.md",
+      "preview": "assets/faceless-previews/niche-013.webp"
+    },
+    {
+      "id": "niche-014",
+      "version": 2,
+      "title": "Cozy anime storybook art style",
+      "answers": {
+        "niche": "14",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Cozy anime storybook",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/cozy-anime-storybook.md",
+      "preview": "assets/faceless-previews/niche-014.webp"
+    },
+    {
+      "id": "niche-015",
+      "version": 2,
+      "title": "3D animation explainer style",
+      "answers": {
+        "niche": "15",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "3D animation explainer",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/3d-animation-explainer.md",
+      "preview": "assets/faceless-previews/niche-015.webp"
+    },
+    {
+      "id": "niche-016",
+      "version": 2,
+      "title": "Cinematic skeleton character host/style",
+      "answers": {
+        "niche": "16",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Cinematic skeleton host",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/cinematic-skeleton-host.md",
+      "preview": "assets/faceless-previews/niche-016.webp"
+    },
+    {
+      "id": "niche-017",
+      "version": 2,
+      "title": "Cute chibi cinematic character host/style",
+      "answers": {
+        "niche": "17",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Cute chibi cinematic host",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/cute-chibi-host.md",
+      "preview": "assets/faceless-previews/niche-017.webp"
+    },
+    {
+      "id": "niche-018",
+      "version": 2,
+      "title": "Artistic toy/doll muse character host/style",
+      "answers": {
+        "niche": "18",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Artistic toy/doll muse",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/artistic-toy-doll-muse-host.md",
+      "preview": "assets/faceless-previews/niche-018.webp"
+    },
+    {
+      "id": "niche-019",
+      "version": 2,
+      "title": "Attractive cinematic avatar host/style",
+      "answers": {
+        "niche": "19",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Cinematic avatar host",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/attractive-cinematic-avatar-host.md",
+      "preview": "assets/faceless-previews/niche-019.webp"
+    },
+    {
+      "id": "niche-020",
+      "version": 2,
+      "title": "8K realistic glamorous fashion avatar host/style",
+      "answers": {
+        "niche": "20",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "8K realistic fashion avatar",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/8k-realistic-glamorous-fashion-avatar-host.md",
+      "preview": "assets/faceless-previews/niche-020.webp"
+    },
+    {
+      "id": "niche-021",
+      "version": 2,
+      "title": "Wildlife / nature animal facts",
+      "answers": {
+        "niche": "21",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/wildlife-nature-animal-facts.md",
+      "preview": "assets/faceless-previews/niche-021.webp"
+    },
+    {
+      "id": "niche-022",
+      "version": 2,
+      "title": "Anime slow-living / countryside cooking story",
+      "answers": {
+        "niche": "22",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Anime slow-living",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/anime-slow-living-countryside-cooking.md",
+      "preview": "assets/faceless-previews/niche-022.webp"
+    },
+    {
+      "id": "niche-023",
+      "version": 2,
+      "title": "AI for normal jobs",
+      "answers": {
+        "niche": "23",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/ai-for-normal-jobs.md",
+      "preview": "assets/faceless-previews/niche-023.webp"
+    },
+    {
+      "id": "niche-024",
+      "version": 2,
+      "title": "Senior tech / scam protection / digital safety",
+      "answers": {
+        "niche": "24",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/senior-tech-scam-protection.md",
+      "preview": "assets/faceless-previews/niche-024.webp"
+    },
+    {
+      "id": "niche-025",
+      "version": 2,
+      "title": "Home disaster prep / insurance reality",
+      "answers": {
+        "niche": "25",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/home-disaster-prep-insurance-reality.md",
+      "preview": "assets/faceless-previews/niche-025.webp"
+    },
+    {
+      "id": "niche-026",
+      "version": 2,
+      "title": "Body mechanics for everyday pain",
+      "answers": {
+        "niche": "26",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/body-mechanics-everyday-pain.md",
+      "preview": "assets/faceless-previews/niche-026.webp"
+    },
+    {
+      "id": "niche-027",
+      "version": 2,
+      "title": "Other custom niche",
+      "answers": {
+        "niche": "27",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/other-custom-niche.md",
+      "preview": "assets/faceless-previews/niche-027.webp"
+    },
+    {
+      "id": "niche-028",
+      "version": 2,
+      "title": "Nursery rhymes / kids songs",
+      "answers": {
+        "niche": "28",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/nursery-rhymes-kids-songs.md",
+      "preview": "assets/faceless-previews/niche-028.webp"
+    },
+    {
+      "id": "niche-029",
+      "version": 2,
+      "title": "AI talking objects / sarcastic object host",
+      "answers": {
+        "niche": "29",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/ai-talking-objects-sarcastic-host.md",
+      "preview": "assets/faceless-previews/niche-029.webp"
+    },
+    {
+      "id": "niche-030",
+      "version": 2,
+      "title": "Faith / Bible cinematic anthology host/style",
+      "answers": {
+        "niche": "30",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Faith cinematic anthology",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/faith-bible-cinematic-anthology-host.md",
+      "preview": "assets/faceless-previews/niche-030.webp"
+    },
+    {
+      "id": "niche-031",
+      "version": 2,
+      "title": "Motivational quotes / sayings with consistent character host",
+      "answers": {
+        "niche": "31",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/motivational-quotes-consistent-character-host.md",
+      "preview": "assets/faceless-previews/niche-031.webp"
+    },
+    {
+      "id": "niche-032",
+      "version": 2,
+      "title": "Science Proves God / faith-science evidence explainer",
+      "answers": {
+        "niche": "32",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "Character host and B-roll",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/faith-science-testimony-intelligent-design-explainer.md",
+      "preview": "assets/faceless-previews/niche-032.webp"
+    },
+    {
+      "id": "niche-033",
+      "version": 2,
+      "title": "Paper-cut editorial commentary / investigative explainer",
+      "answers": {
+        "niche": "33",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Paper-cut editorial",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/paper-cut-editorial-commentary-investigative-explainer.md",
+      "preview": "assets/faceless-previews/niche-033.webp"
+    },
+    {
+      "id": "fruit-micro-drama",
+      "version": 2,
+      "title": "Fruit Micro-Drama",
+      "answers": {
+        "niche": "36",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Cinematic story",
+        "style": "Stylized 3D",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "partsTotal": "1",
+        "presetContext": "Fruit Micro-Drama original animated Tagalog story; use dedicated niche rulebook. Standalone by default."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/fruit-micro-drama.md",
+      "preview": "assets/faceless-previews/fruit-micro-drama.webp"
+    },
+    {
+      "id": "pet-soap-opera",
+      "version": 2,
+      "title": "Pet Soap Opera",
+      "answers": {
+        "niche": "37",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Cinematic story",
+        "style": "Stylized 3D",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "partsTotal": "1",
+        "presetContext": "Pet Soap Opera original animated Tagalog story; use dedicated niche rulebook. Standalone by default."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/pet-soap-opera.md",
+      "preview": "assets/faceless-previews/pet-soap-opera.webp"
+    },
+    {
+      "id": "pinoy-folklore-horror",
+      "version": 2,
+      "title": "Pinoy Folklore Horror",
+      "answers": {
+        "niche": "38",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Cinematic story",
+        "style": "Anime",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "partsTotal": "1",
+        "presetContext": "Pinoy Folklore Horror original animated Tagalog story; use dedicated niche rulebook. Standalone by default."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/pinoy-folklore-horror.md",
+      "preview": "assets/faceless-previews/pinoy-folklore-horror.webp"
+    },
+    {
+      "id": "claymation-pinoy-comedy",
+      "version": 2,
+      "title": "Claymation Pinoy Comedy",
+      "answers": {
+        "niche": "39",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "3",
+        "format": "Cinematic story",
+        "style": "Claymation",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "partsTotal": "1",
+        "presetContext": "Claymation Pinoy Comedy original family-friendly Filipino story; follow user plot exactly."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/claymation-pinoy-comedy.md",
+      "preview": "assets/faceless-previews/claymation-pinoy-comedy.webp"
+    },
+    {
+      "id": "kwentong-may-aral",
+      "version": 2,
+      "title": "Kwentong May Aral",
+      "answers": {
+        "niche": "40",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Cinematic story",
+        "style": "Stylized 3D",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "partsTotal": "1",
+        "presetContext": "Kwentong May Aral original family-friendly Filipino story; follow user plot exactly."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/kwentong-may-aral.md",
+      "preview": "assets/faceless-previews/kwentong-may-aral.webp"
+    },
+    {
+      "id": "tiny-workers-miniature-world",
+      "version": 2,
+      "title": "Tiny Workers — Miniature World",
+      "answers": {
+        "niche": "41",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "4",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "Miniature crews solve one oversized everyday task with fixed scale, causal tool movement and a satisfying complete reveal. Ambient sound by default; no dialogue unless requested."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/tiny-workers-miniature-world.md",
+      "preview": "assets/faceless-previews/tiny-workers-miniature-world.webp"
+    },
+    {
+      "id": "impossible-asmr",
+      "version": 2,
+      "title": "Impossible ASMR",
+      "answers": {
+        "niche": "42",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "3",
+        "format": "Hands-only process",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames",
+        "presetContext": "Impossible sensory materials and synchronized contact sounds. No speech, music or eating by default. Clearly fictional visual ASMR, not a real recipe."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/impossible-asmr.md",
+      "preview": "assets/faceless-previews/impossible-asmr.webp"
+    },
+    {
+      "id": "time-travel-pov",
+      "version": 2,
+      "title": "Time Travel POV",
+      "answers": {
+        "niche": "43",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "6",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames",
+        "presetContext": "First-person historical daily-life reconstruction with fixed viewpoint, period wardrobe and a complete day arc. Use verified supplied facts only; uncertain detail is dramatized, not archival evidence."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/time-travel-pov.md",
+      "preview": "assets/faceless-previews/time-travel-pov.webp"
+    },
+    {
+      "id": "creature-vlog-comedy",
+      "version": 2,
+      "title": "Creature Vlog Comedy",
+      "answers": {
+        "niche": "44",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "3",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "An original recurring fictional creature films everyday comic adventures with a consistent selfie camera, natural dialogue, and a complete punchline. Comedy, not folklore horror."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/creature-vlog-comedy.md",
+      "preview": "assets/faceless-previews/creature-vlog-comedy.webp"
+    },
+    {
+      "id": "kapre-vlogs",
+      "version": 2,
+      "title": "Kapre Vlogs",
+      "answers": {
+        "niche": "45",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "Found-footage night vlog: one shy, gentle, original kapre films himself observing city life. Same kapre every episode; gentle comedy, wonder and a little loneliness."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/kapre-vlogs.md",
+      "preview": "assets/faceless-previews/kapre-vlogs.webp"
+    },
+    {
+      "id": "pov-history",
+      "version": 2,
+      "title": "POV History",
+      "answers": {
+        "niche": "46",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "8",
+        "sceneCount": "8",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames",
+        "presetContext": "Second-person immersion: \"POV: you are...\" one historical moment told in chronological scenes, period-accurate, no modern objects, no gore."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/pov-history.md",
+      "preview": "assets/faceless-previews/pov-history.webp"
+    },
+    {
+      "id": "pera-matters",
+      "version": 2,
+      "title": "Pera Matters",
+      "answers": {
+        "niche": "47",
+        "topicMode": "Existing topic",
+        "language": "English and Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "B-roll with narration",
+        "style": "Flat illustration",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames",
+        "presetContext": "Taglish money-education cards for Filipinos: one clear rule per scene with bold peso numbers. Educational, not financial advice."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/pera-matters.md",
+      "preview": "assets/faceless-previews/pera-matters.webp"
+    },
+    {
+      "id": "luxury-files",
+      "version": 2,
+      "title": "Luxury Files",
+      "answers": {
+        "niche": "48",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "B-roll with narration",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames",
+        "presetContext": "Billionaire-lifestyle breakdown montages with narration: aspirational purchases, then a twist of reality or consequence. Archetypes only, no real people or brands."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/luxury-files.md",
+      "preview": "assets/faceless-previews/luxury-files.webp"
+    },
+    {
+      "id": "unsolved-ph",
+      "version": 2,
+      "title": "Unsolved PH",
+      "answers": {
+        "niche": "49",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "10",
+        "format": "B-roll with narration",
+        "style": "Documentary",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames",
+        "presetContext": "Fictional Filipino mystery narration over moody scene cards: places, old photos, objects. Inspired by urban-legend style; never real crimes, victims or gore."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/unsolved-ph.md",
+      "preview": "assets/faceless-previews/unsolved-ph.webp"
+    },
+    {
+      "id": "halloween-specials",
+      "version": 2,
+      "title": "Halloween Specials",
+      "answers": {
+        "niche": "50",
+        "topicMode": "Existing topic",
+        "language": "English and Tagalog",
+        "sceneDuration": "8",
+        "sceneCount": "8",
+        "format": "Cinematic story",
+        "style": "Stylized 3D",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "Seasonal Halloween comedy: stylish spooky costumes and candy-horror fun. Fun-scary, never graphic."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/halloween-specials.md",
+      "preview": "assets/faceless-previews/halloween-specials.webp"
+    },
+    {
+      "id": "sari-sari-confessions",
+      "version": 2,
+      "title": "Sari-Sari Store Confessions",
+      "answers": {
+        "niche": "51",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "Fixed sari-sari store set at dusk; rotating customers tell one micro-story per scene: utang, coins, regulars, closing-time confessions. Dialogue-driven dramedy."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/sari-sari-confessions.md",
+      "preview": "assets/faceless-previews/sari-sari-confessions.webp"
+    },
+    {
+      "id": "blotter-ngayon-gabi",
+      "version": 2,
+      "title": "Blotter Ngayon Gabi",
+      "answers": {
+        "niche": "52",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "Mockumentary reenactment of a barangay-blotter-style neighbor complaint: noise, fences, pets, parking. Both sides told, always a lighthearted resolution."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/blotter-ngayon-gabi.md",
+      "preview": "assets/faceless-previews/blotter-ngayon-gabi.webp"
+    },
+    {
+      "id": "jeepney-diaries",
+      "version": 2,
+      "title": "Jeepney Dashboard Diaries",
+      "answers": {
+        "niche": "53",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "Cinematic story",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "Fixed jeepney driver-seat viewpoint: dashboard, hanging rosary, passengers seen in the mirror. Each scene one passenger micro-story; OFW and family emotions welcome."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/jeepney-diaries.md",
+      "preview": "assets/faceless-previews/jeepney-diaries.webp"
+    },
+    {
+      "id": "reverse-history",
+      "version": 2,
+      "title": "Reverse History",
+      "answers": {
+        "niche": "54",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "8",
+        "format": "B-roll with narration",
+        "style": "Documentary",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Direct scene frames",
+        "presetContext": "Alternate-history \"what if\" told as vintage newsreels: an invention arrives centuries early, period crowds react. Archival look, no real living people."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/reverse-history.md",
+      "preview": "assets/faceless-previews/reverse-history.webp"
+    },
+    {
+      "id": "podcast-hugot-host",
+      "version": 2,
+      "title": "Podcast Hugot Host",
+      "answers": {
+        "niche": "55",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "8",
+        "sceneCount": "3",
+        "format": "Character host and B-roll",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "One elegant recurring Filipina podcast host in a classy outfit gives warm Tagalog relationship/life advice (hugot) in one podcast studio (hair, outfit and studio are picked fresh for each project); continuous talking, two framings. Save the host in the Character Library to reuse her face."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/podcast-hugot-host.md",
+      "preview": "assets/faceless-previews/podcast-hugot-host.webp"
+    },
+    {
+      "id": "ugc-product-ad",
+      "version": 2,
+      "title": "UGC Product Ad",
+      "answers": {
+        "niche": "56",
+        "topicMode": "Creative brief",
+        "language": "English",
+        "sceneDuration": "10",
+        "sceneCount": "3",
+        "format": "Character host and B-roll",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "ugcTheme": "Problem → solution",
+        "ugcLocation": "Auto",
+        "ugcVoice": "Male"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/ugc-product-ad.md",
+      "preview": "assets/faceless-previews/ugc-product-ad.webp"
+    },
+    {
+      "id": "kitchen-tips-food-explainer",
+      "version": 2,
+      "title": "Food & Body Tips",
+      "answers": {
+        "niche": "57",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "5",
+        "format": "Character host and B-roll",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "kitchenMode": "Food & body tips",
+        "kitchenVoice": "Male"
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/food-body-tips.md",
+      "preview": "assets/faceless-previews/kitchen-tips-food-explainer.webp"
+    },
+    {
+      "id": "herbal-tips",
+      "version": 2,
+      "title": "Herbal Tips",
+      "answers": {
+        "niche": "57",
+        "topicMode": "Existing topic",
+        "language": "Tagalog",
+        "sceneDuration": "10",
+        "sceneCount": "5",
+        "format": "Character host and B-roll",
+        "style": "Photorealistic cinematic",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "kitchenMode": "Herbal tips",
+        "kitchenVoice": "Male",
+        "presetContext": "An original mature presenter explains herbs in warm, conversational Tagalog with occasional Kabayan, a relatable hook, a simple explanation and a visible preparation demonstration. Educational claims follow the supplied evidence; no invented cures, personal endorsements or supplement sales pitch."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/kitchen-tips-food-explainer.md",
+      "preview": "assets/faceless-previews/herbal-tips.webp"
+    },
+    {
+      "id": "animated-short-film",
+      "version": 2,
+      "title": "Animated Short Films",
+      "answers": {
+        "niche": "59",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "8",
+        "sceneCount": "5",
+        "format": "Cinematic story",
+        "style": "Flat illustration",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "Emotional animated short films with one expressive ivory cartoon figure (oversized smooth egg-shaped head with no neck, ears, nose, hair or clothes, heavy-lidded almond eyes, angled brows, mitten hands) in dark cinematic rooms: discipline, dopamine, phone habits, loneliness, what if. One calm off-screen narrator; captions come from the SRT export."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/animated-short-films.md",
+      "preview": "assets/faceless-previews/animated-short-film.webp"
+    },
+    {
+      "id": "stick-figure-explainer",
+      "version": 2,
+      "title": "Stick Figure Explainer",
+      "answers": {
+        "niche": "60",
+        "stickFigure": "Clothed cartoon",
+        "topicMode": "Existing topic",
+        "language": "English",
+        "sceneDuration": "8",
+        "sceneCount": "5",
+        "format": "B-roll with narration",
+        "style": "Flat illustration",
+        "imageMode": "Extension image queue",
+        "exportProfile": "Scene image + video",
+        "destination": "Save in extension",
+        "imageWorkflow": "Reference images first",
+        "presetContext": "A friendly clothed cartoon stick figure with a round white face, thick black outlines, knit beanie, colourful T-shirt, black shorts and thin black limbs, on a project-specific background with simple icons and motion graphics, explains psychology, self-improvement, what if questions, science or history. One friendly off-screen narrator; no words drawn on screen, captions come from the SRT export."
+      },
+      "target": {
+        "platform": "flow",
+        "model": "Omni 1.1 Flash"
+      },
+      "source": "niches/stick-figure-explainer.md",
+      "preview": "assets/faceless-previews/stick-figure-explainer.webp"
+    }
+  ]
+}
