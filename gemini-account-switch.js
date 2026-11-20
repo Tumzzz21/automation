@@ -38,9 +38,10 @@
       if (!only && !row.isConnected) { if (row.dataset.shown) storyRows.delete(row); continue; }
       if (row.isConnected) row.dataset.shown = '1';
       const input = row.querySelector('input');
-      input.checked = on; input.disabled = typeof running !== 'undefined' && running;
-      row.querySelector('.ms-pro').hidden = pro;
-      row.querySelector('.ms-story-text').textContent = !pro ? 'Pro and Discord Pro'
+      if (input) { input.checked = on; input.disabled = typeof running !== 'undefined' && running; }
+      const badge = row.querySelector('.ms-pro'); if (badge) badge.hidden = pro;
+      const txt = row.querySelector('.ms-story-text');
+      if (txt) txt.textContent = !pro ? 'Pro and Discord Pro'
         : !on ? 'Off · this story stops when Gemini\'s daily limit is reached'
         : chosen.length < 2 ? 'Choose at least two accounts'
         : chosen.map(n => NAMES[n]).join(' → ') + ' · sign in to each in Chrome';
@@ -64,7 +65,7 @@
       document.getElementById('controlTabBtn')?.click();
       setTimeout(() => {
         const box = document.getElementById('geminiSwitch');
-        if (box) { box.hidden = false; box.querySelector('.ms-panel').hidden = !(state.on && isPro()); }   // shown here even when Control is on another engine
+        if (box) { box.hidden = false; const panel = box.querySelector('.ms-panel'); if (panel) panel.hidden = !(state.on && isPro()); }   // shown here even when Control is on another engine
         box?.scrollIntoView({block: 'center', behavior: 'smooth'}); box?.querySelector('#geminiSwitchOn')?.focus();
       }, 150);
     });
@@ -78,11 +79,10 @@
     if (!box) return;
     box.hidden = !onGemini();
     const pro = isPro(), on = !!state.on && pro;
-    box.querySelector('#geminiSwitchOn').checked = on;
-    box.querySelector('#geminiSwitchOn').disabled = typeof running !== 'undefined' && running;
-    box.querySelector('.ms-pro').hidden = pro;
-    box.querySelector('.ms-panel').hidden = !on;
-    box.querySelector('.ms-head').textContent = '▸ GEMINI ACCOUNTS · MAX ' + maxAccounts() + ' · USED IN ORDER';
+    const toggle = box.querySelector('#geminiSwitchOn'); if (toggle) { toggle.checked = on; toggle.disabled = typeof running !== 'undefined' && running; }
+    const badge = box.querySelector('.ms-pro'); if (badge) badge.hidden = pro;
+    const panel = box.querySelector('.ms-panel'); if (panel) panel.hidden = !on;
+    const head = box.querySelector('.ms-head'); if (head) head.textContent = '▸ GEMINI ACCOUNTS · MAX ' + maxAccounts() + ' · USED IN ORDER';
     for (const chip of box.querySelectorAll('.ms-acc')) {
       const n = Number(chip.value), lock = locked(n), text = chip.nextElementSibling;
       chip.checked = !lock && state.accounts.includes(n);

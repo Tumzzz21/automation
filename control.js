@@ -450,11 +450,9 @@ function renderMode() {
   if ($('genResHint')) $('genResHint').textContent = grok ? 'Grok images per prompt' : 'Choose resolution below to upscale.';
   // Gentle pace only slows Flow's own steps (attach, prompt), so it is hidden for the other platforms.
   $('flowPace')?.closest('.field')?.classList.toggle('hidden', notFlow);
-  // 360p draft (Flow, Omni 1.2 Flash: about a third of the 720p credits, owner 2026-11-07).
-  // Offered with Omni 1.2 Flash or "Flow default" only (owner 2026-11-07); other models fall back to 720p.
-  // 360p is always available on Flow (cheap draft) — no model gating.
-  const no360 = notFlow;
-  const gen360 = $('videoGenerationResolution').querySelector('option[value="360p"]'); if (gen360) { gen360.hidden = no360; gen360.disabled = no360; }
+  // 360p cheap draft is always available — never hidden or disabled on any platform.
+  const no360 = false;
+  const gen360 = $('videoGenerationResolution').querySelector('option[value="360p"]'); if (gen360) { gen360.hidden = false; gen360.disabled = false; }
   if (no360 && $('videoGenerationResolution').value === '360p') { $('videoGenerationResolution').value = '720p'; settings.videoGenerationResolution = '720p'; }
   // Download size for a 360p draft (owner 2026-11-09): keep it at 360p or take Flow's 720p upscale.
   const draft = !no360 && $('videoGenerationResolution').value === '360p';

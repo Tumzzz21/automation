@@ -18,11 +18,10 @@
     if (!box) return;
     box.hidden = (settings.platform || 'flow') !== 'flow';
     const pro = isPro(), on = !!state.on && pro;
-    box.querySelector('#manualSwitchOn').checked = on;
-    box.querySelector('#manualSwitchOn').disabled = typeof running !== 'undefined' && running;
-    box.querySelector('.ms-pro').hidden = pro;
-    box.querySelector('.ms-panel').hidden = !on;
-    box.querySelector('.ms-head').textContent = '▸ FLOW ACCOUNTS · MAX ' + maxAccounts() + ' · USED IN ORDER';
+    const toggle = box.querySelector('#manualSwitchOn'); if (toggle) { toggle.checked = on; toggle.disabled = typeof running !== 'undefined' && running; }
+    const proBadge = box.querySelector('.ms-pro'); if (proBadge) proBadge.hidden = pro;
+    const panel = box.querySelector('.ms-panel'); if (panel) panel.hidden = !on;
+    const head = box.querySelector('.ms-head'); if (head) head.textContent = '▸ FLOW ACCOUNTS · MAX ' + maxAccounts() + ' · USED IN ORDER';
     for (const chip of box.querySelectorAll('.ms-acc')) {
       const n = Number(chip.value), lock = locked(n), label = chip.nextElementSibling;
       chip.checked = !lock && state.accounts.includes(n);
@@ -30,7 +29,7 @@
       label.textContent = (lock ? '🔒 ' : '') + NAMES[n];
       label.title = lock ? 'Upgrade to paid Pro to switch between up to ' + PRO_ACCOUNTS + ' Flow accounts' : n ? 'The ' + NAMES[n] + ' account in Flow\'s account menu' : 'Your main Google account in Flow';
     }
-    box.querySelector('#manualSwitchPaid').checked = !!state.confirmedPaid;
+    const paid = box.querySelector('#manualSwitchPaid'); if (paid) paid.checked = !!state.confirmedPaid;
     paintStoryRows();
   }
 
@@ -44,9 +43,10 @@
       if (!only && !row.isConnected) { if (row.dataset.shown) storyRows.delete(row); continue; }
       if (row.isConnected) row.dataset.shown = '1';
       const input = row.querySelector('input');
-      input.checked = on; input.disabled = typeof running !== 'undefined' && running;
-      row.querySelector('.ms-pro').hidden = pro;
-      row.querySelector('.ms-story-text').textContent = !pro ? 'Pro and Discord Pro'
+      if (input) { input.checked = on; input.disabled = typeof running !== 'undefined' && running; }
+      const badge = row.querySelector('.ms-pro'); if (badge) badge.hidden = pro;
+      const txt = row.querySelector('.ms-story-text');
+      if (txt) txt.textContent = !pro ? 'Pro and Discord Pro'
         : !on ? 'Off · this story stops when Flow credits run out'
         : chosen.length < 2 ? 'Choose at least two accounts'
         : chosen.map(n => NAMES[n]).join(' → ') + (state.confirmedPaid ? ' · each with its own paid Flow plan' : ' · confirm each has its own paid Flow plan');
